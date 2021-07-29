@@ -8,7 +8,7 @@ const app = express();
 
 const PORT = process.env.PORT || 80;
 const APP_REQUEST_HANDLER = express.static(path.resolve(__dirname, '../frontend/dist'));
-const APP_URL_MAP = ['/', '/openStock', '/stocks', '/stocks/:ticker'];
+const APP_URL_MAP = ['/', '/openStock', '/stocks', '/stocks/:ticker', '/portfolio'];
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

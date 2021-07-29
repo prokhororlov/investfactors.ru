@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { Home, Stocks, Stock } from '../views';
+import {
+  Home,
+  Stocks,
+  Stock,
+  Portfolio,
+} from '../views';
 
 const routes = [
   {
@@ -17,6 +22,11 @@ const routes = [
     name: 'Stock',
     props: true,
     component: Stock,
+  },
+  {
+    path: '/portfolio',
+    name: 'Portfolio',
+    component: Portfolio,
   },
   {
     path: '/openStock',
