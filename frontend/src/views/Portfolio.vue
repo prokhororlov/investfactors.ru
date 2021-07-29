@@ -16,9 +16,6 @@ export default {
   },
   computed: {
     portfolio() {
-      console.log(new URLSearchParams(window.location.search)
-        .get('tickers')
-        .split(' '));
       return new URLSearchParams(window.location.search)
         .get('tickers')
         .split(' ');

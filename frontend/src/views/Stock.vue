@@ -1,13 +1,15 @@
 <template>
-  <div class="stock">
-    <Chart class="stock__chart" v-if="ticker" style="grid-area: chart" :ticker="ticker" />
-    <Profile v-if="ticker" style="grid-area: profile" :ticker="ticker" />
-    <Metrics v-if="ticker" style="grid-area: metrics" :ticker="ticker" />
+  <div class="stock" v-if="ticker">
+    <Info :ticker="ticker" style="grid-area: info" class="stock__info" />
+    <Chart :ticker="ticker" style="grid-area: chart" class="stock__chart" />
+    <Profile :ticker="ticker" style="grid-area: profile" class="stock__profile" />
+    <Metrics :ticker="ticker" style="grid-area: metrics" class="stock__metrics" />
   </div>
 </template>
 
 <script>
 import {
+  Info,
   Chart,
   Profile,
   Metrics,
@@ -16,6 +18,7 @@ import {
 export default {
   name: 'Stock',
   components: {
+    Info,
     Chart,
     Profile,
     Metrics,
@@ -30,11 +33,17 @@ export default {
 .stock {
   display: grid;
   grid-template-areas:
+    "info info info"
     "chart chart metrics"
     "profile profile profile";
 
+  &__info {
+    height: 173px!important;
+  }
+
   @media (max-width: 768px) {
     grid-template-areas:
+      "info"
       "chart"
       "profile"
       "metrics";
@@ -42,7 +51,12 @@ export default {
     &__chart{
       height: 300px!important;
     }
+
+    &__info {
+      height: 228px!important;
+    }
   }
+
   grid-gap: 16px;
 }
 </style>
