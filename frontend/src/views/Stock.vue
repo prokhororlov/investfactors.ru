@@ -1,9 +1,9 @@
 <template>
   <div class="stock" v-if="ticker">
-    <Info :ticker="ticker" style="grid-area: info" class="stock__info" />
-    <Chart :ticker="ticker" style="grid-area: chart" class="stock__chart" />
-    <Profile :ticker="ticker" style="grid-area: profile" class="stock__profile" />
-    <Metrics :ticker="ticker" style="grid-area: metrics" class="stock__metrics" />
+    <Info :ticker="ticker" class="stock__info" />
+    <Chart :ticker="ticker" class="stock__chart" />
+    <Profile :ticker="ticker" class="stock__profile" />
+    <Metrics :ticker="ticker" class="stock__metrics" />
   </div>
 </template>
 
@@ -36,6 +36,11 @@ export default {
     "info info info"
     "chart chart metrics"
     "profile profile profile";
+
+  &__info { grid-area: 'info'; }
+  &__chart { grid-area: 'chart'; }
+  &__profile { grid-area: 'profile'; }
+  &__metrics { grid-area: 'metrics'; }
 
   &__info {
     height: 173px!important;
