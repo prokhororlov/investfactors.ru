@@ -2,7 +2,7 @@
 
 Link: https://invest-factors.herokuapp.com
 
-###Setup & Run
+### Setup & Run
 ```bash
 yarn
 yarn dev
