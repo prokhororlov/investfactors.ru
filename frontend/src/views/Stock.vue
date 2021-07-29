@@ -37,10 +37,10 @@ export default {
     "chart chart metrics"
     "profile profile profile";
 
-  &__info { grid-area: 'info'; }
-  &__chart { grid-area: 'chart'; }
-  &__profile { grid-area: 'profile'; }
-  &__metrics { grid-area: 'metrics'; }
+  &__info { grid-area: info; }
+  &__chart { grid-area: chart; }
+  &__profile { grid-area: profile; }
+  &__metrics { grid-area: metrics; }
 
   &__info {
     height: 173px!important;
