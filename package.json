@@ -1,0 +1,13 @@
+{
+  "name": "invest-factors",
+  "version": "1.0.0",
+  "author": "Prokhor Orlov",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn --cwd frontend build",
+    "start": "yarn --cwd backend start",
+    "dev": "sh _ci/start_dev.sh"
+  },
+  "workspaces": ["frontend", "backend"]
+}
