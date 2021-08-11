@@ -45,6 +45,7 @@ const getMoexStocks = () => (
 
     // доски (нейминг by MOEX)
     const boards = {
+      SMAL: {},
       TQBR: {},
     }
 
@@ -89,6 +90,7 @@ const getMoexStocks = () => (
       })
 
     return {
+      ...boards.SMAL,
       ...boards.TQBR,
     }
   })
@@ -97,7 +99,7 @@ const getMoexStocks = () => (
 const update = () => Promise.all([getTinkoffStocks(), getMoexStocks()])
   .then(([tinkoffStocks, moexStocks]) => {
     return Object.values(moexStocks)
-      .filter(stock => tinkoffStocks[stock.ticker])
+      // .filter(stock => tinkoffStocks[stock.ticker])
       .map(stock => ({...stock, ...tinkoffStocks[stock.ticker] }))
   })
   .then(instruments => db.database().ref('stocks').set(instruments) && instruments)

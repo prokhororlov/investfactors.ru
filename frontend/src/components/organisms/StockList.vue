@@ -14,7 +14,7 @@
       </el-table-column>
       <el-table-column label="Тикер" width="70">
         <template #default="scope">
-          {{ cleanTicker(scope.row.ticker) }}
+          {{cleanTicker(scope.row.ticker) }}
         </template>
       </el-table-column>
       <el-table-column>
@@ -78,7 +78,7 @@
           <el-input v-model="search" placeholder="Что ищем?" />
         </template>
         <template #default="scope">
-          <router-link :to="`/stocks/${cleanTicker(scope.row.ticker)}`">
+          <router-link :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
             Перейти к компании
           </router-link>
         </template>

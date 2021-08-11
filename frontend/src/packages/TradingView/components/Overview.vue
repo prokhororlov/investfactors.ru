@@ -16,6 +16,7 @@
       height: '100%',
       colorTheme: this.theme,
       isTransparent: false,
+      chartOnly: true,
     }"
   />
 </template>
