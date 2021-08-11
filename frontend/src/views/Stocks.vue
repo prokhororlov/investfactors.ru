@@ -5,8 +5,6 @@
 <script>
 import StockList from '../components/organisms/StockList.vue';
 
-const axios = require('axios');
-
 export default {
   name: 'Stocks',
   props: {
@@ -17,19 +15,8 @@ export default {
   },
   data() {
     return {
-      stocks: [],
+      stocks: this.$store.state.stocks,
     };
-  },
-  methods: {
-    update() {
-      axios.post('/api/stocks')
-        .then((response) => {
-          this.stocks = response.data;
-        });
-    },
-  },
-  mounted() {
-    setInterval(this.update, 1000 * 5);
   },
 };
 </script>
