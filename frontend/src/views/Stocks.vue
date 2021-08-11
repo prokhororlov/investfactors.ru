@@ -20,11 +20,16 @@ export default {
       stocks: [],
     };
   },
+  methods: {
+    update() {
+      axios.post('/api/stocks')
+        .then((response) => {
+          this.stocks = response.data;
+        });
+    },
+  },
   mounted() {
-    axios.post('/api/stocks')
-      .then((response) => {
-        this.stocks = response.data;
-      });
+    setInterval(this.update, 1000 * 5);
   },
 };
 </script>

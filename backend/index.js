@@ -3,6 +3,7 @@ try { require('dotenv').config() } catch {}
 const express = require('express');
 const path = require('path');
 const db = require('./src/db');
+const syncStocks = require('./utils/syncStocks');
 
 const app = express();
 
@@ -22,3 +23,5 @@ app.post('/api/stocks/', db.stocks.getList);
 app.listen(PORT, () => {
   console.log('http://localhost');
 })
+
+syncStocks.start();

@@ -2,13 +2,9 @@
   <div class="stock-list">
     <el-table
       :data="tableData"
+      class="stock-list__table"
       style="width: 100%">
-      <el-table-column width="70">
-        <template #default="scope">
-          {{ search ? scope.$index + 1 : getAbsoluteIndex(scope.$index) + 1 }}
-        </template>
-      </el-table-column>
-      <el-table-column width="70">
+      <el-table-column width="45" style="padding: 0">
         <template #default="scope">
           <div
             class="stock-list__item-logo"
@@ -21,7 +17,62 @@
           {{ cleanTicker(scope.row.ticker) }}
         </template>
       </el-table-column>
-      <el-table-column label="Название компании" prop="name" />
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('NAME')"
+            class="stock-list__item-filter">
+            Название компании
+          </div>
+        </template>
+        <template #default="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('PRICE')"
+            class="stock-list__item-filter">
+            Цена
+          </div>
+        </template>
+        <template #default="scope">
+          <div>
+            {{ scope.row.price }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('CHANGE')"
+            class="stock-list__item-filter">
+            Изменение
+          </div>
+        </template>
+        <template #default="scope">
+          <div class="stock-list__item-change"
+          :class="{
+            'stock-list__item-change_increased': scope.row.change > 0,
+            'stock-list__item-change_decreased': scope.row.change < 0,
+          }">
+            {{ scope.row.change }}%
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('CAP')"
+            class="stock-list__item-filter">
+            Капитализация
+          </div>
+        </template>
+        <template #default="scope">
+          {{ formatCap(scope.row.cap) }}
+        </template>
+      </el-table-column>
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" placeholder="Что ищем?" />
@@ -44,6 +95,10 @@
 </template>
 
 <script>
+
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP']
+  .reduce((t, i) => ({ ...t, [i]: i }), {});
+
 export default {
   name: 'StockList',
   props: {
@@ -54,9 +109,42 @@ export default {
       search: '',
       currentPage: this.$route.query.page || 1, // почему-то не работает ни в какую
       pageSize: 20,
+      sortType: SORT_TYPES.NAME,
+      sortStage: 0,
     };
   },
   methods: {
+    sortTable(a, b) {
+      switch (this.sortType) {
+        case SORT_TYPES.PRICE:
+          return [b.price - a.price, a.price - b.price][this.sortStage];
+        case SORT_TYPES.CHANGE:
+          return [b.change - a.change, a.change - b.change][this.sortStage];
+        case SORT_TYPES.CAP:
+          return [b.cap - a.cap, a.cap - b.cap][this.sortStage];
+        case SORT_TYPES.NAME:
+        default:
+          return [a.name.localeCompare(b.name), b.name.localeCompare(a.name)][this.sortStage];
+      }
+    },
+    setSortType(type) {
+      if (this.sortStage || this.sortType !== type) {
+        this.sortStage = 0;
+      } else {
+        this.sortStage += 1;
+      }
+
+      this.sortType = SORT_TYPES[type];
+    },
+    formatCap(value) {
+      let cap = { value: value / 1000000, measure: 'M' };
+      if (cap.value / 1000 > 1) cap = { value: cap.value / 1000, measure: 'B' };
+      if (cap.value / 1000 > 1) cap = { value: cap.value / 1000, measure: 'T' };
+
+      return value
+        ? `${new Intl.NumberFormat('ru-RU', { fraction: 2 }).format(cap.value)} ${cap.measure}`
+        : '-';
+    },
     cleanTicker(ticker) {
       return ticker.replace(/@.*$/g, '');
     },
@@ -80,12 +168,14 @@ export default {
   },
   computed: {
     tableData() {
+      const stocks = [...this.stocks].sort(this.sortTable);
       return this.search
-        ? this.stocks.filter((data) => (
-          `${data.ticker}/${data.name}`
-            .toLowerCase()
-            .includes(this.search.toLowerCase())))
-        : this.stocks
+        ? stocks
+          .filter((data) => (
+            `${data.ticker}/${data.name}`
+              .toLowerCase()
+              .includes(this.search.toLowerCase())))
+        : stocks
           .slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
     },
   },
@@ -103,13 +193,37 @@ export default {
       text-decoration: none;
     }
 
+    &__table {
+      .cell {
+        white-space: nowrap;
+      }
+    }
+
     &__item {
+
+      &-filter {
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          color: lightseagreen;
+        }
+      }
 
       &-logo {
         border: 1px solid #E8E8E8;
         width: 25px;
         height: 25px;
         border-radius: 25px;
+      }
+
+      &-change {
+        color: #A8A8A8;
+        &_increased {
+          color: green;
+        }
+        &_decreased {
+          color: red;
+        }
       }
     }
   }
