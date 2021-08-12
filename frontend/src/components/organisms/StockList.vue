@@ -235,7 +235,7 @@ export default {
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
-        ? `${new Intl.NumberFormat('ru-RU', { fraction: 2 }).format(cap.value)} ${cap.measure}`
+        ? `${new Intl.NumberFormat('engit ', { fraction: 2 }).format(cap.value)} ${cap.measure}`
         : '-';
     },
     cleanTicker(ticker) {
