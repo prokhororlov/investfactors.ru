@@ -1,6 +1,7 @@
 <template>
   <div class="stock-list">
     <el-table
+      v-loading="!tableData.length"
       :data="tableData"
       class="stock-list__table"
       style="width: 100%">
@@ -84,13 +85,14 @@
           </div>
         </template>
         <template #default="scope">
-          <div class="stock-list__item-change"
+          <div v-if="scope.row.volume" class="stock-list__item-change"
           :class="{
             'stock-list__item-change_increased': scope.row.change > 0,
             'stock-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ formatCap(scope.row.volume) }}
           </div>
+          <template v-else>-</template>
         </template>
       </el-table-column>
 
@@ -103,13 +105,14 @@
           </div>
         </template>
         <template #default="scope">
-          <div class="stock-list__item-change"
+          <div v-if="scope.row.cap && scope.row.volume" class="stock-list__item-change"
           :class="{
             'stock-list__item-change_increased': scope.row.change > 0,
             'stock-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ scope.row.volumeToCap }}%
           </div>
+          <template v-else>-</template>
         </template>
       </el-table-column>
 
@@ -201,9 +204,11 @@ export default {
       this.handleCurrentPageChange(1);
     },
     formatCap(value) {
-      let cap = { value: value / 1000000, measure: 'M' };
-      if (cap.value / 1000 > 1) cap = { value: cap.value / 1000, measure: 'B' };
-      if (cap.value / 1000 > 1) cap = { value: cap.value / 1000, measure: 'T' };
+      let cap = { value, measure: '' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
         ? `${new Intl.NumberFormat('ru-RU', { fraction: 2 }).format(cap.value)} ${cap.measure}`
@@ -258,6 +263,7 @@ export default {
     }
 
     &__table {
+      min-height: 450px;
       .cell {
         white-space: nowrap;
       }
@@ -281,7 +287,6 @@ export default {
       }
 
       &-change {
-        color: #A8A8A8;
         &_increased {
           color: green;
         }

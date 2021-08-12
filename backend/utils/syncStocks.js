@@ -7,7 +7,7 @@ try { require('dotenv').config() } catch {}
 
 const db = require('../src/db/connect');
 const TinkoffAPI = require('../src/services/tinkoff/api');
-const MoexAPI = require("moex-api");
+const MoexAPI = require('moex-api');
 const config = require('../src/db/config');
 
 const api = {
@@ -61,7 +61,7 @@ const getMoexStocks = () => (
             ...info,
             [column]: i[index]
           })
-        })  
+        })
 
         boards[info.BOARDID][info.SECID] = {
           board: info.BOARDID,
@@ -83,12 +83,12 @@ const getMoexStocks = () => (
         // распределяем по доскам
         boards[info.BOARDID][info.SECID] = {
           ...boards[info.BOARDID][info.SECID],
-          price: info.LAST || info.MARKETPRICE,
+          price: info.LAST || info.MARKETPRICE || info.LCURRENTPRICE,
           cap: info.ISSUECAPITALIZATION,
           change: info.CHANGE || 0,
           changePercent: Math.floor(info.CHANGE / info.OPEN * 10000) / 100 || 0,
-          volume: info.VALTODAY_RUR,
-          volumeToCap: info.ISSUECAPITALIZATION && Math.floor((info.VALTODAY_RUR || 0) / info.ISSUECAPITALIZATION * 10000) / 100 || 0,
+          volume: info.VALTODAY,
+          volumeToCap: info.ISSUECAPITALIZATION && Math.floor((info.VALTODAY || 0) / info.ISSUECAPITALIZATION * 10000) / 100 || 0,
           market: 'MOEX',
         }
       })
