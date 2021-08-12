@@ -2,8 +2,8 @@
   <div class="stock" v-if="ticker">
     <Info :ticker="ticker" class="stock__info" />
     <Chart :ticker="ticker" class="stock__chart" />
-    <Profile :ticker="ticker" class="stock__profile" />
     <Metrics :ticker="ticker" class="stock__metrics" />
+    <Profile :ticker="ticker" class="stock__profile" />
   </div>
 </template>
 
@@ -34,8 +34,8 @@ export default {
   display: grid;
   grid-template-areas:
     "info info info"
-    "chart chart metrics"
-    "profile profile profile";
+    "chart chart profile"
+    "metrics metrics metrics";
 
   &__info { grid-area: info; }
   &__chart { grid-area: chart; }
