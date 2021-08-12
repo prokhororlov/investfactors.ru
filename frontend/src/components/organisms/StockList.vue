@@ -106,7 +106,7 @@
           <div
             @click="setSortType('VOLUME_TO_CAP')"
             class="stock-list__item-filter"
-            :class="getSortActiveClassConstructor('NAME')">
+            :class="getSortActiveClassConstructor('VOLUME_TO_CAP')">
             Объём / Кап.
           </div>
         </template>
@@ -235,7 +235,7 @@ export default {
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
-        ? `${new Intl.NumberFormat('en', { fraction: 2 }).format(cap.value)} ${cap.measure}`
+        ? `${new Intl.NumberFormat('en', { fraction: 3 }).format(cap.value)} ${cap.measure}`
         : '-';
     },
     cleanTicker(ticker) {
