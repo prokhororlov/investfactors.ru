@@ -138,6 +138,8 @@ export default {
       }
 
       this.sortType = SORT_TYPES[type];
+      this.currentPage = 1;
+      this.handleCurrentPageChange(1);
     },
     formatCap(value) {
       let cap = { value: value / 1000000, measure: 'M' };
