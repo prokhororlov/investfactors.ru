@@ -68,7 +68,7 @@
           <div
             @click="setSortType('CAP')"
             class="stock-list__item-filter">
-            Рын. кап.
+            Капитализация
           </div>
         </template>
         <template #default="scope">
@@ -101,7 +101,7 @@
           <div
             @click="setSortType('VOLUME_TO_CAP')"
             class="stock-list__item-filter">
-            Объём / Рын. кап.
+            Объём / Кап.
           </div>
         </template>
         <template #default="scope">
@@ -128,6 +128,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="tableData.length"
       background
       layout="prev, pager, next"
       @current-change="handleCurrentPageChange"
@@ -150,7 +151,7 @@ export default {
   data() {
     return {
       search: '',
-      currentPage: this.$route.query.page || 1, // почему-то не работает ни в какую
+      currentPage: +this.$route.query.page || 1, // почему-то не работает ни в какую
       pageSize: 20,
       sortType: SORT_TYPES.CAP,
       sortStage: 0,
