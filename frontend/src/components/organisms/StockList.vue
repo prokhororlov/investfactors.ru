@@ -22,7 +22,7 @@
           <div
             @click="setSortType('NAME')"
             class="stock-list__item-filter">
-            Название компании
+            Название
           </div>
         </template>
         <template #default="scope">
@@ -57,22 +57,50 @@
             'stock-list__item-change_increased': scope.row.change > 0,
             'stock-list__item-change_decreased': scope.row.change < 0,
           }">
-            {{ scope.row.change }}%
+            <span>{{ scope.row.changePercent }}%</span>
           </div>
         </template>
       </el-table-column>
+
       <el-table-column>
         <template #header>
           <div
             @click="setSortType('CAP')"
             class="stock-list__item-filter">
-            Капитализация
+            Рын. кап.
           </div>
         </template>
         <template #default="scope">
           {{ formatCap(scope.row.cap) }}
         </template>
       </el-table-column>
+
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('VOLUME')"
+            class="stock-list__item-filter">
+            Объём
+          </div>
+        </template>
+        <template #default="scope">
+          {{ formatCap(scope.row.volume) }}
+        </template>
+      </el-table-column>
+
+      <el-table-column>
+        <template #header>
+          <div
+            @click="setSortType('VOLUME_TO_CAP')"
+            class="stock-list__item-filter">
+            Объём / Рын. кап.
+          </div>
+        </template>
+        <template #default="scope">
+          {{ scope.row.volumeToCap }}%
+        </template>
+      </el-table-column>
+
       <el-table-column align="right">
         <template #header>
           <el-input v-model="search" placeholder="Что ищем?" />
@@ -96,7 +124,7 @@
 
 <script>
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP']
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME', 'VOLUME_TO_CAP']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
 export default {
@@ -117,17 +145,36 @@ export default {
     sortTable(a, b) {
       switch (this.sortType) {
         case SORT_TYPES.PRICE:
-          return [b.price - a.price, a.price - b.price][this.sortStage];
+          return [
+            b.price - a.price,
+            a.price - b.price][this.sortStage];
+        case SORT_TYPES.VOLUME: {
+          const aVol = a.volume || 0;
+          const bVol = b.volume || 0;
+          return [
+            bVol - aVol,
+            aVol - bVol][this.sortStage];
+        }
+        case SORT_TYPES.VOLUME_TO_CAP:
+          return [
+            b.volumeToCap - a.volumeToCap,
+            a.volumeToCap - b.volumeToCap][this.sortStage];
         case SORT_TYPES.CHANGE:
-          return [b.change - a.change, a.change - b.change][this.sortStage];
+          return [
+            b.changePercent - a.changePercent,
+            a.changePercent - b.changePercent][this.sortStage];
         case SORT_TYPES.CAP: {
           const aCap = a.cap || 0;
           const bCap = b.cap || 0;
-          return [bCap - aCap, aCap - bCap][this.sortStage];
+          return [
+            bCap - aCap,
+            aCap - bCap][this.sortStage];
         }
         case SORT_TYPES.NAME:
         default:
-          return [a.name.localeCompare(b.name), b.name.localeCompare(a.name)][this.sortStage];
+          return [
+            a.name.localeCompare(b.name),
+            b.name.localeCompare(a.name)][this.sortStage];
       }
     },
     setSortType(type) {

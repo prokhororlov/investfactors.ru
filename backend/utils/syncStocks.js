@@ -85,7 +85,10 @@ const getMoexStocks = () => (
           ...boards[info.BOARDID][info.SECID],
           price: info.LAST || info.MARKETPRICE,
           cap: info.ISSUECAPITALIZATION,
-          change: Math.floor(info.CHANGE / info.OPEN * 10000) / 100 || 0,
+          change: info.CHANGE || 0,
+          changePercent: Math.floor(info.CHANGE / info.OPEN * 10000) / 100 || 0,
+          volume: info.VALTODAY_RUR,
+          volumeToCap: info.ISSUECAPITALIZATION && Math.floor((info.VALTODAY_RUR || 0) / info.ISSUECAPITALIZATION * 10000) / 100 || 0,
           market: 'MOEX',
         }
       })
