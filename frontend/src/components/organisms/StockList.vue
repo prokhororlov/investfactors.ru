@@ -22,7 +22,8 @@
         <template #header>
           <div
             @click="setSortType('NAME')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('NAME')">
             Название
           </div>
         </template>
@@ -34,7 +35,8 @@
         <template #header>
           <div
             @click="setSortType('PRICE')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('PRICE')">
             Цена
           </div>
         </template>
@@ -48,7 +50,8 @@
         <template #header>
           <div
             @click="setSortType('CHANGE')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('CHANGE')">
             Изменение
           </div>
         </template>
@@ -67,7 +70,8 @@
         <template #header>
           <div
             @click="setSortType('CAP')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('CAP')">
             Капитализация
           </div>
         </template>
@@ -80,7 +84,8 @@
         <template #header>
           <div
             @click="setSortType('VOLUME')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('VOLUME')">
             Объём
           </div>
         </template>
@@ -100,7 +105,8 @@
         <template #header>
           <div
             @click="setSortType('VOLUME_TO_CAP')"
-            class="stock-list__item-filter">
+            class="stock-list__item-filter"
+            :class="getSortActiveClassConstructor('NAME')">
             Объём / Кап.
           </div>
         </template>
@@ -154,7 +160,7 @@ export default {
       currentPage: +this.$route.query.page || 1, // почему-то не работает ни в какую
       pageSize: 20,
       sortType: SORT_TYPES.CAP,
-      sortStage: 0,
+      sortStage: 1,
     };
   },
   methods: {
@@ -163,44 +169,61 @@ export default {
         case SORT_TYPES.PRICE:
           return [
             b.price - a.price,
-            a.price - b.price][this.sortStage];
+            a.price - b.price][this.sortStage - 1];
         case SORT_TYPES.VOLUME: {
           const aVol = a.volume || 0;
           const bVol = b.volume || 0;
           return [
             bVol - aVol,
-            aVol - bVol][this.sortStage];
+            aVol - bVol][this.sortStage - 1];
         }
         case SORT_TYPES.VOLUME_TO_CAP:
           return [
             b.volumeToCap - a.volumeToCap,
-            a.volumeToCap - b.volumeToCap][this.sortStage];
+            a.volumeToCap - b.volumeToCap][this.sortStage - 1];
         case SORT_TYPES.CHANGE:
           return [
             b.changePercent - a.changePercent,
-            a.changePercent - b.changePercent][this.sortStage];
+            a.changePercent - b.changePercent][this.sortStage - 1];
         case SORT_TYPES.CAP: {
           const aCap = a.cap || 0;
           const bCap = b.cap || 0;
           return [
             bCap - aCap,
-            aCap - bCap][this.sortStage];
+            aCap - bCap][this.sortStage - 1];
         }
         case SORT_TYPES.NAME:
         default:
           return [
             a.name.localeCompare(b.name),
-            b.name.localeCompare(a.name)][this.sortStage];
+            b.name.localeCompare(a.name)][this.sortStage - 1];
       }
     },
     setSortType(type) {
-      if (this.sortStage || this.sortType !== type) {
-        this.sortStage = 0;
-      } else {
-        this.sortStage += 1;
+      switch (this.sortStage) {
+        case 1:
+          if (this.sortType === type) {
+            this.sortStage = 2;
+          } else {
+            this.sortStage = 1;
+            this.sortType = type;
+          }
+          break;
+        case 2:
+          if (this.sortType === type) {
+            this.sortStage = 1;
+            this.sortType = SORT_TYPES.CAP;
+          } else {
+            this.sortStage = 1;
+            this.sortType = type;
+          }
+          break;
+        case 0:
+        default:
+          this.sortStage = 1;
+          this.sortType = SORT_TYPES.CAP;
       }
 
-      this.sortType = SORT_TYPES[type];
       this.currentPage = 1;
       this.handleCurrentPageChange(1);
     },
@@ -234,6 +257,13 @@ export default {
         top: 61 + 16,
         behavior: 'smooth',
       });
+    },
+    getSortActiveClassConstructor(sortType) {
+      return {
+        'stock-list__item-filter_active': sortType === this.sortType && this.sortStage,
+        'stock-list__item-filter_up': sortType === this.sortType && this.sortStage === 1,
+        'stock-list__item-filter_down': sortType === this.sortType && this.sortStage === 2,
+      };
     },
   },
   computed: {
@@ -275,8 +305,15 @@ export default {
       &-filter {
         cursor: pointer;
         transition: 0.3s;
-        &:hover {
+        &:hover, &_active {
           color: lightseagreen;
+        }
+
+        &_up::after{
+          content: '↑';
+        }
+        &_down::after{
+          content: '↓';
         }
       }
 
