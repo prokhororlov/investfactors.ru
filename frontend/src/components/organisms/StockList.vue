@@ -57,7 +57,7 @@
             'stock-list__item-change_increased': scope.row.change > 0,
             'stock-list__item-change_decreased': scope.row.change < 0,
           }">
-            <span>{{ scope.row.changePercent }}%</span>
+            {{ scope.row.changePercent }}%
           </div>
         </template>
       </el-table-column>
@@ -84,7 +84,13 @@
           </div>
         </template>
         <template #default="scope">
-          {{ formatCap(scope.row.volume) }}
+          <div class="stock-list__item-change"
+          :class="{
+            'stock-list__item-change_increased': scope.row.change > 0,
+            'stock-list__item-change_decreased': scope.row.change < 0,
+          }">
+            {{ formatCap(scope.row.volume) }}
+          </div>
         </template>
       </el-table-column>
 
@@ -97,7 +103,13 @@
           </div>
         </template>
         <template #default="scope">
-          {{ scope.row.volumeToCap }}%
+          <div class="stock-list__item-change"
+          :class="{
+            'stock-list__item-change_increased': scope.row.change > 0,
+            'stock-list__item-change_decreased': scope.row.change < 0,
+          }">
+            {{ scope.row.volumeToCap }}%
+          </div>
         </template>
       </el-table-column>
 
