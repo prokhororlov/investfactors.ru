@@ -109,7 +109,7 @@ export default {
       search: '',
       currentPage: this.$route.query.page || 1, // почему-то не работает ни в какую
       pageSize: 20,
-      sortType: SORT_TYPES.NAME,
+      sortType: SORT_TYPES.CAP,
       sortStage: 0,
     };
   },
