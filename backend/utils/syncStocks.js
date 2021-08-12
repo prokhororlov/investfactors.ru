@@ -8,6 +8,7 @@ try { require('dotenv').config() } catch {}
 const db = require('../src/db/connect');
 const TinkoffAPI = require('../src/services/tinkoff/api');
 const MoexAPI = require("moex-api");
+const config = require('../src/db/config');
 
 const api = {
   tinkoff: TinkoffAPI,
@@ -99,10 +100,10 @@ const getMoexStocks = () => (
 const update = () => Promise.all([getTinkoffStocks(), getMoexStocks()])
   .then(([tinkoffStocks, moexStocks]) => {
     return Object.values(moexStocks)
-      .filter(stock => tinkoffStocks[stock.ticker])
-      .map(stock => ({...stock, ...tinkoffStocks[stock.ticker] }))
+    .filter(stock => tinkoffStocks[stock.ticker])
+    .map(stock => ({...stock, ...tinkoffStocks[stock.ticker] }))
   })
-  .then(instruments => db.database().ref('stocks').set(instruments) && instruments)
+  .then(instruments => db.database().ref(config.refs.stocks).set(instruments) && instruments)
   .then(instruments => console.log('Successfull stocks update:', instruments.length, 'set'))
   .catch((error) => console.warn(error.message));
 

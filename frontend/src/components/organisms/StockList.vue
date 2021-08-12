@@ -120,8 +120,11 @@ export default {
           return [b.price - a.price, a.price - b.price][this.sortStage];
         case SORT_TYPES.CHANGE:
           return [b.change - a.change, a.change - b.change][this.sortStage];
-        case SORT_TYPES.CAP:
-          return [b.cap - a.cap, a.cap - b.cap][this.sortStage];
+        case SORT_TYPES.CAP: {
+          const aCap = a.cap || 0;
+          const bCap = b.cap || 0;
+          return [bCap - aCap, aCap - bCap][this.sortStage];
+        }
         case SORT_TYPES.NAME:
         default:
           return [a.name.localeCompare(b.name), b.name.localeCompare(a.name)][this.sortStage];
