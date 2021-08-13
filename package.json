@@ -7,7 +7,16 @@
   "scripts": {
     "build": "yarn --cwd frontend build",
     "start": "yarn --cwd backend start",
-    "dev": "sh _ci/start_dev.sh"
+    "dev": "sh _ci/start_dev.sh",
+    "postinstall": "husky install"
   },
-  "workspaces": ["frontend", "backend"]
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "husky": "^7.0.1"
+  }
 }
