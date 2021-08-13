@@ -1,3 +1,5 @@
+const getList = require('./getList');
+
 module.exports = {
-  getList: require('./getList'),
-}
+  getList,
+};

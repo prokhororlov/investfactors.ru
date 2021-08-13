@@ -1,6 +1,6 @@
 module.exports = {
   refs: {
-    stocks: process.env.NODE_ENV === 'development' ? 'stocks-dev' : 'stocks'
+    stocks: process.env.NODE_ENV === 'development' ? 'stocks-dev' : 'stocks',
   },
   options: {
     apiKey: process.env.API_KEY,
@@ -10,5 +10,5 @@ module.exports = {
     storageBucket: process.env.STORAGE_BUCKET,
     messagingSenderId: process.env.MESSAGING_SENDING_ID,
     appId: process.env.APP_ID,
-  }
-}
+  },
+};

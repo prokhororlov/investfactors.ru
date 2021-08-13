@@ -1,6 +1,5 @@
+require('dotenv').config()
 const OpenAPI = require('@tinkoff/invest-openapi-js-sdk');
-
-try { require('dotenv').config() } catch {}
 
 const apiURL = 'https://api-invest.tinkoff.ru/openapi/sandbox';
 const socketURL = 'wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws';
