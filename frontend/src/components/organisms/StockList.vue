@@ -9,7 +9,9 @@
         <template #default="scope">
           <div
             class="stock-list__item-logo"
-            :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${cleanTicker(scope.row.ticker)}.svg), #F3F3F3;`"
+            :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${
+              cleanTicker(scope.row.ticker)
+            }.svg), #F3F3F3;`"
           />
         </template>
       </el-table-column>
