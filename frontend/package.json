@@ -6,9 +6,19 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
+    "@tiptap/extension-document": "^2.0.0-beta.13",
+    "@tiptap/extension-dropcursor": "^2.0.0-beta.18",
+    "@tiptap/extension-image": "^2.0.0-beta.15",
+    "@tiptap/extension-paragraph": "^2.0.0-beta.17",
+    "@tiptap/extension-text": "^2.0.0-beta.13",
+    "@tiptap/starter-kit": "^2.0.0-beta.97",
+    "@tiptap/vue-3": "^2.0.0-beta.52",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.54",
@@ -17,6 +27,11 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/vue3": "^6.3.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -27,6 +42,7 @@
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0",
@@ -34,7 +50,8 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "vue-loader": "^16.5.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

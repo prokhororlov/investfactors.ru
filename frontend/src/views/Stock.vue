@@ -4,6 +4,7 @@
     <Chart :ticker="ticker" class="stock__chart" />
     <Metrics :ticker="ticker" class="stock__metrics" />
     <Profile :ticker="ticker" class="stock__profile" />
+    <!-- <Editor /> -->
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import {
   Profile,
   Metrics,
 } from '../packages/TradingView';
+// import { Editor } from '../components/molecules';
 
 export default {
   name: 'Stock',
@@ -22,6 +24,7 @@ export default {
     Chart,
     Profile,
     Metrics,
+    // Editor,
   },
   props: {
     ticker: String,
