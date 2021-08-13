@@ -1,7 +1,7 @@
 module.exports = {
   refs: {
     stocks: process.env.NODE_ENV === 'development' ? 'stocks-dev' : 'stocks'
-  }, 
+  },
   options: {
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
