@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const express = require('express');
 const path = require('path');
 const db = require('./src/db');
-const syncStocks = require('./utils/syncStocks');
+const syncStocks = require('./src/services/stocks/sync');
 const logger = require('./utils/logger');
 
 const app = express();

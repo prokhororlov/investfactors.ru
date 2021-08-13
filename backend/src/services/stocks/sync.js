@@ -2,13 +2,11 @@
 Is needed to start once in a day e.g. to save
 tickers from Tinkoff Investments
 ------------------------------------------------- */
-require('dotenv').config();
-
 const MoexAPI = require('moex-api');
-const db = require('../src/db/connect');
-const TinkoffAPI = require('../src/services/tinkoff/api');
-const config = require('../src/db/config');
-const logger = require('./logger');
+const db = require('../../db/connect');
+const TinkoffAPI = require('../tinkoff/api');
+const config = require('../../db/config');
+const logger = require('../../../utils/logger');
 
 const api = {
   tinkoff: TinkoffAPI,
@@ -118,8 +116,8 @@ const isValidTime = () => {
   const currentTime = +[hours, minutes, seconds].join('');
 
   return ![6, 7].includes[day] // exclude weekends
-    && currentTime > 92950 // 09:29:50
-    && currentTime < 235010; // 23:20:10
+    && currentTime > 92959 + 1500 // 09:29:59 + 00:15:00 (moex delay)
+    && currentTime < 235959 + 1500; // 23:59:59 + 00:15:00 (moex delay)
 };
 
 function update() {
