@@ -125,9 +125,6 @@ export default {
   components: {
     EditorContent,
     ElButton,
-    ElDropdown,
-    ElDropdownMenu,
-    ElDropdownItem,
     Icon,
   },
 
