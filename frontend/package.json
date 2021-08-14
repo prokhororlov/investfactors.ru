@@ -11,7 +11,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@element-plus/icons": "^0.0.11",
     "@tiptap/extension-document": "^2.0.0-beta.13",
     "@tiptap/extension-dropcursor": "^2.0.0-beta.18",
     "@tiptap/extension-image": "^2.0.0-beta.15",
@@ -20,6 +19,7 @@
     "@tiptap/starter-kit": "^2.0.0-beta.97",
     "@tiptap/vue-3": "^2.0.0-beta.52",
     "axios": "^0.21.1",
+    "bootstrap-icons": "^1.5.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.54",
     "vue": "^3.0.0",

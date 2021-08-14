@@ -2,108 +2,98 @@
   <div>
     <div v-if="editor">
       <ElRow>
-        <ElButton
-          circle
-          icon="el-icon-picture-outline"
-          @click="addImage" />
-        <ElButton round
+        <ElButton size="mini" @click="addImage">
+          <Icon name="card-image"/>
+        </ElButton>
+
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }">
-          bold
+          <Icon name="type-bold"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleItalic().run()"
           :class="{ 'is-active': editor.isActive('italic') }">
-          italic
+          <Icon name="type-italic"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleStrike().run()"
           :class="{ 'is-active': editor.isActive('strike') }">
-          strike
+          <Icon name="type-strikethrough"/>
         </ElButton>
-        <ElButton round
-          @click="editor.chain().focus().toggleCode().run()"
-          :class="{ 'is-active': editor.isActive('code') }">
-          code
-        </ElButton>
-        <ElButton round
+
+        <!-- <ElButton round
           @click="editor.chain().focus().unsetAllMarks().run()">
           clear marks
         </ElButton>
         <ElButton round
           @click="editor.chain().focus().clearNodes().run()">
           clear nodes
-        </ElButton>
-        <ElButton round
+        </ElButton> -->
+
+        <ElButton size="mini"
           @click="editor.chain().focus().setParagraph().run()"
           :class="{ 'is-active': editor.isActive('paragraph') }">
-          paragraph
+          <Icon name="paragraph"/>
         </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-          h1
+          <Icon name="type-h1"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-          h2
+          <Icon name="type-h2"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-          h3
+          <Icon name="type-h3"/>
         </ElButton>
-        <ElButton round
-          @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-          h4
-        </ElButton>
-        <ElButton round
-          @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-          h5
-        </ElButton>
-        <ElButton round
-          @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-          h6
-        </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }">
-          bullet list
+          <Icon name="list-ul"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleOrderedList().run()"
           :class="{ 'is-active': editor.isActive('orderedList') }">
-          ordered list
+          <Icon name="list-ol"/>
         </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
+          @click="editor.chain().focus().toggleCode().run()"
+          :class="{ 'is-active': editor.isActive('code') }">
+          <Icon name="code"/>
+        </ElButton>
+
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleCodeBlock().run()"
           :class="{ 'is-active': editor.isActive('codeBlock') }">
-          code block
+          <Icon name="code-slash"/>
         </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
           @click="editor.chain().focus().toggleBlockquote().run()"
           :class="{ 'is-active': editor.isActive('blockquote') }">
-          blockquote
+          <Icon name="chat-square-quote"/>
         </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
           @click="editor.chain().focus().setHorizontalRule().run()">
-          horizontal rule
+          <Icon name="hr"/>
         </ElButton>
-        <ElButton round
-          @click="editor.chain().focus().setHardBreak().run()">
-          hard break
-        </ElButton>
-        <ElButton round
+
+        <ElButton size="mini"
           @click="editor.chain().focus().undo().run()">
-          undo
+          <Icon name="arrow-left"/>
         </ElButton>
-        <ElButton round
+        <ElButton size="mini"
           @click="editor.chain().focus().redo().run()">
-          redo
+          <Icon name="arrow-right"/>
         </ElButton>
       </ElRow>
     </div>
@@ -112,7 +102,13 @@
 </template>
 
 <script>
-import { ElButton } from 'element-plus';
+import {
+  ElButton,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+} from 'element-plus';
+
 import './Editor.scss';
 
 import { Editor, EditorContent } from '@tiptap/vue-3';
@@ -123,10 +119,16 @@ import Text from '@tiptap/extension-text';
 import Image from '@tiptap/extension-image';
 import Dropcursor from '@tiptap/extension-dropcursor';
 
+import { Icon } from '../../atoms';
+
 export default {
   components: {
     EditorContent,
     ElButton,
+    ElDropdown,
+    ElDropdownMenu,
+    ElDropdownItem,
+    Icon,
   },
 
   props: {
