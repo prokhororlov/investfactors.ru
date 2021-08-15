@@ -15,4 +15,7 @@ const Template = (args) => ({
 });
 
 export const Component = Template.bind({});
-Component.args = {};
+Component.args = {
+  name: 'pencil',
+  size: 16,
+};

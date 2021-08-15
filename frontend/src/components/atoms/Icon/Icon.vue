@@ -8,6 +8,7 @@
       fontSize: `${size}px`,
       width: `${size}px`,
       height: `${size}px`,
+      transform: `rotate(${rotate}deg)`,
     }" />
 </template>
 
@@ -24,6 +25,15 @@ export default {
       type: Number,
       default: 16,
     },
+    rotate: {
+      type: Number,
+      default: 0,
+    },
   },
 };
 </script>
+<style>
+.icon {
+  display: flex;
+}
+</style>

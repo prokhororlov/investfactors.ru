@@ -1,5 +1,10 @@
 /* Basic editor styles */
 .ProseMirror {
+
+  &-focused {
+    outline: none;
+  }
+
   font-family: sans-serif;
   > * + * {
     margin-top: 0.75em;
@@ -24,10 +29,15 @@
     color: #616161;
   }
 
+  mark, code {
+    padding: 0 4px;
+    border-radius: 4px;
+  } 
+
   pre {
     background: #0D0D0D;
     color: #FFF;
-    font-family: 'JetBrainsMono', monospace;
+    font-family: monospace;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
 
@@ -54,8 +64,98 @@
     border-top: 2px solid rgba(#0D0D0D, 0.1);
     margin: 2rem 0;
   }
+
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+
+    td,
+    th {
+      min-width: 1em;
+      border: 2px solid #ced4da;
+      padding: 4px;
+      vertical-align: top;
+      box-sizing: border-box;
+      position: relative;
+
+      > * {
+        margin-block-start: 4px;
+        margin-block-end: 4px;
+        margin-inline-start: 4px;
+	      margin-inline-end: 4px;
+      }
+    }
+
+    th {
+      font-weight: bold;
+      text-align: left;
+      background-color: #f1f3f5;
+    }
+
+    .selectedCell:after {
+      z-index: 2;
+      position: absolute;
+      content: "";
+      left: 0; right: 0; top: 0; bottom: 0;
+      background: rgba(200, 200, 255, 0.4);
+      pointer-events: none;
+    }
+
+    .column-resize-handle {
+      position: absolute;
+      height: 100%;
+      right: -6px;
+      top: -4px;
+      width: 4px;
+      background-color: #adf;
+      pointer-events: none;
+    }
+  }
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
 }
 
 .editor {
-  // color: red;
+  display: grid;
+  border-bottom: 1px solid lightgray;
+
+  &__content {
+    max-height: 500px;
+	  overflow-y: auto;
+    padding: 12px;
+    &::-webkit-scrollbar             { width: 4px; height: 4px; }
+    &::-webkit-scrollbar-track       { background: rgba(32, 178, 170, 0.3); }
+    &::-webkit-scrollbar-thumb       { background: rgba(32, 178, 170, 0.9); }
+    &::-webkit-scrollbar-thumb:hover { background: rgba(32, 178, 170, 0.8); }
+  }
+
+  &__instruments {
+    background: white;
+    padding: 12px 0;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    display: grid;
+    grid-gap: 6px;
+
+    &-row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-gap: 6px;
+      
+      .el-button {
+        padding: 6px;
+        margin: 0!important;
+      }
+    }
+  }
 }
