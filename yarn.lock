@@ -3108,6 +3108,11 @@
   dependencies:
     prosemirror-inputrules "^1.1.3"
 
+"@tiptap/extension-character-count@^2.0.0-beta.13":
+  version "2.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-character-count/-/extension-character-count-2.0.0-beta.13.tgz#6fb6b56d28762534c6643916018b8b08bea3bbb2"
+  integrity sha512-2rRMvp+ppocyw6tmJx/hpl8wvs9BOIFN5fvDpVxH9INXJu9ZnZPfb2Pko/2RYsx+uWn2q7nKS4jgqNmkZA0ovg==
+
 "@tiptap/extension-code-block@^2.0.0-beta.17":
   version "2.0.0-beta.17"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-code-block/-/extension-code-block-2.0.0-beta.17.tgz#b12ab35561da08b359f4d8dced2b8c30eb62fcdb"
