@@ -17,6 +17,7 @@ const Template = (args) => ({
 
 export const Component = Template.bind({});
 Component.args = {
+  editable: true,
   content: `
   <h2>
     Hi there,

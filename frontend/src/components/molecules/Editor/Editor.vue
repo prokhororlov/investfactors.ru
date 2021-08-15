@@ -1,6 +1,6 @@
 <template>
   <div class="editor" v-if="editor">
-    <div class='editor__instruments'>
+    <div class='editor__instruments' v-if="editable">
       <EditorControlBase
         class='editor__instruments-row'
         :editor="editor"/>
@@ -63,6 +63,10 @@ export default {
       type: String,
       default: '',
     },
+    editable: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -87,6 +91,7 @@ export default {
   mounted() {
     this.editor = new Editor({
       content: this.content,
+      editable: this.editable,
       extensions: [
         StarterKit,
         Underline,
