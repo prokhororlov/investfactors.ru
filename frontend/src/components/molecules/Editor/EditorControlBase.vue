@@ -168,7 +168,12 @@
 </template>
 
 <script>
-import { ElButton, ElRow, ElButtonGroup } from 'element-plus';
+import {
+  ElButton,
+  ElRow,
+  ElButtonGroup,
+  ElMessageBox,
+} from 'element-plus';
 import { Icon } from '../../atoms';
 
 export default {
@@ -183,11 +188,14 @@ export default {
   },
   methods: {
     addImage() {
-      const url = window.prompt('URL');
-
-      if (url) {
-        this.editor.chain().focus().setImage({ src: url }).run();
-      }
+      ElMessageBox.prompt(null, 'Введите ссылку на изображение', {
+        confirmButtonText: 'Вставить',
+        cancelButtonText: 'Отмена',
+        inputPattern: /\.(gif|jpe?g|tiff?|png|webp|bmp)(\/?\?.*)?$/i,
+        inputErrorMessage: 'Некорректная ссылка',
+      }).then(({ value }) => {
+        this.editor.chain().focus().setImage({ src: value }).run();
+      });
     },
     // setLink() {
     //   const url = window.prompt('URL');

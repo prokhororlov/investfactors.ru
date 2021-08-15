@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@tiptap/extension-character-count": "^2.0.0-beta.13",
     "@tiptap/extension-document": "^2.0.0-beta.13",
     "@tiptap/extension-dropcursor": "^2.0.0-beta.18",
     "@tiptap/extension-highlight": "^2.0.0-beta.15",

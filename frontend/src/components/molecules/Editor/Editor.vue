@@ -1,11 +1,14 @@
 <template>
-  <div class="editor">
-    <div class='editor__instruments' v-if="editor">
+  <div class="editor" v-if="editor">
+    <div class='editor__instruments'>
       <EditorControlBase
         class='editor__instruments-row'
         :editor="editor"/>
     </div>
     <EditorContent class="editor__content" :editor="editor" />
+    <div class="editor__characters-count" v-if="limit - editor.getCharacterCount() <= 100">
+      {{ editor.getCharacterCount() }}/{{ limit }} символов
+    </div>
   </div>
 </template>
 
@@ -27,15 +30,14 @@ import TableHeader from '@tiptap/extension-table-header';
 import TextAlign from '@tiptap/extension-text-align';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
+import CharacterCount from '@tiptap/extension-character-count';
 
 import EditorControlBase from './EditorControlBase.vue';
 
 const CustomTableCell = TableCell.extend({
   addAttributes() {
     return {
-      // extend the existing attributes …
       ...this.parent?.(),
-      // and add a new one …
       backgroundColor: {
         default: null,
         parseHTML: (element) => ({
@@ -66,6 +68,7 @@ export default {
   data() {
     return {
       editor: null,
+      limit: 15000,
     };
   },
 
@@ -103,6 +106,9 @@ export default {
         }),
         Highlight,
         Link,
+        CharacterCount.configure({
+          limit: this.limit,
+        }),
       ],
       onUpdate: () => {
         this.$emit('update:content', this.editor.getHTML());
