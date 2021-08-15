@@ -90,19 +90,13 @@
       </ElButton>
     </ElButtonGroup>
 
+    <!-- <ElButton size="mini"
+      @click="setLink"
+      :class="{ 'is-active': editor.isActive('link') }">
+      <Icon name="link-45deg"/>
+    </ElButton> -->
+
     <ElButtonGroup>
-      <ElButton size="mini"
-        @click="editor.chain().focus().toggleCode().run()"
-        :class="{ 'is-active': editor.isActive('code') }">
-        <Icon name="code"/>
-      </ElButton>
-
-      <ElButton size="mini"
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'is-active': editor.isActive('codeBlock') }">
-        <Icon name="code-slash"/>
-      </ElButton>
-
       <ElButton size="mini"
         @click="editor.chain().focus().toggleBlockquote().run()"
         :class="{ 'is-active': editor.isActive('blockquote') }">
@@ -170,23 +164,6 @@
         </ElButton>
       </template>
     </ElButtonGroup>
-
-    <!-- <ElButton size="mini"
-      @click="editor.chain().focus().setHorizontalRule().run()">
-      <Icon name="hr"/>
-    </ElButton> -->
-
-    <!-- <ElButtonGroup>
-      <ElButton size="mini"
-        @click="editor.chain().focus().undo().run()">
-        <Icon name="arrow-left"/>
-      </ElButton>
-
-      <ElButton size="mini"
-        @click="editor.chain().focus().redo().run()">
-        <Icon name="arrow-right"/>
-      </ElButton>
-    </ElButtonGroup> -->
   </ElRow>
 </template>
 
@@ -212,6 +189,16 @@ export default {
         this.editor.chain().focus().setImage({ src: url }).run();
       }
     },
+    // setLink() {
+    //   const url = window.prompt('URL');
+
+    //   this.editor
+    //     .chain()
+    //     .focus()
+    //     .extendMarkRange('link')
+    //     .setLink({ href: url })
+    //     .run();
+    // },
   },
 };
 </script>
