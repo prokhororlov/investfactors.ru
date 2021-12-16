@@ -116,7 +116,7 @@ const isValidTime = () => {
   const currentTime = +[hours, minutes, seconds].join('');
 
   return ![6, 7].includes[day] // exclude weekends
-    && currentTime > 92959 + 1500 // 09:29:59 (trading start) + 00:15:00 (moex delay)
+    && currentTime > 75959 + 1500 // 07:29:59 (trading start) + 00:15:00 (moex delay)
     && currentTime < 235959 + 1500; // 23:59:59 (trading start) + 00:15:00 (moex delay)
 };
 
