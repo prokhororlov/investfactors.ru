@@ -11,7 +11,7 @@ const app = express();
 
 const PORT = process.env.PORT || 80;
 const APP_REQUEST_HANDLER = express.static(path.resolve(__dirname, '../frontend/dist'));
-const APP_URL_MAP = ['/', '/openStock', '/stocks', '/stocks/:ticker', '/portfolio'];
+const APP_URL_MAP = ['/', '/openStock', '/stocks', '/stocks/:ticker', '/portfolio', '/profile'];
 
 app.use(morgan('dev'));
 app.use(express.json());
