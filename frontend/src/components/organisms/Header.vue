@@ -1,6 +1,9 @@
 <template>
   <div class="header">
-    <el-menu mode="horizontal"
+    <div class="header__left">
+      <img :src="logo" class="header__logo" alt="">
+    </div>
+    <el-menu mode="horizontal" class="header__middle"
       :default-active="activeIndex"
       @click="onClickMenuItem">
       <el-menu-item index="0"><router-link to="/">Home</router-link></el-menu-item>
@@ -19,7 +22,12 @@
 </template>
 
 <script>
+import logo from '../../assets/img/logo.svg';
+
 export default {
+  data: () => ({
+    logo,
+  }),
   methods: {
     login() {
       this.$auth.loginWithPopup()
@@ -55,6 +63,11 @@ export default {
   align-items: center;
   border-bottom: solid 1px #e6e6e6;
   padding: 0 16px;
+
+  &__logo {
+    width: 100px;
+    margin-top: -2px;
+  }
 
   &__right {
     display: grid;

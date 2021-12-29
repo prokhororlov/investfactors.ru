@@ -35,6 +35,7 @@ export default {
 <style lang="scss">
 .stock {
   display: grid;
+  padding: 16px;
   grid-template-areas:
     "info info info"
     "chart chart profile"
