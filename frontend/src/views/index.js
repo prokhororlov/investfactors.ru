@@ -1,4 +1,4 @@
-import Home from './Home.vue';
+import Home from './Home/Home.vue';
 import Stock from './Stock.vue';
 import Stocks from './Stocks.vue';
 import Portfolio from './Portfolio.vue';
