@@ -19,7 +19,7 @@
                 `" />
               <div class="stocks-list__item-ticker" >{{ cleanTicker(scope.row.ticker) }}</div>
             </router-link>
-            <div class="stocks-list__item-ticker" >{{ scope.row.name }}</div>
+            <div class="stocks-list__item-name" >{{ scope.row.name }}</div>
           </div>
         </template>
       </el-table-column>
@@ -334,6 +334,12 @@ export default {
         width: 25px;
         height: 25px;
         border-radius: 25px;
+      }
+
+      @media (max-width: 991px) {
+        &-name{
+          display: none;
+        }
       }
 
       &-filter {
