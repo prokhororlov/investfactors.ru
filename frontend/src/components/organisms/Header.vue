@@ -6,8 +6,12 @@
     <el-menu mode="horizontal" class="header__middle"
       :default-active="activeIndex"
       @click="onClickMenuItem">
-      <el-menu-item index="0"><router-link to="/">Home</router-link></el-menu-item>
-      <el-menu-item index="1"><router-link to="/stocks/">Stocks</router-link></el-menu-item>
+      <el-menu-item index="0" class="header__nav-item">
+        <router-link to="/">Home</router-link>
+      </el-menu-item>
+      <el-menu-item index="1" class="header__nav-item">
+        <router-link to="/stocks/">Stocks</router-link>
+      </el-menu-item>
     </el-menu>
     <div class="header__right">
       <template v-if="$auth.authenticated">
@@ -61,8 +65,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 1px #e6e6e6;
+  border: none;
   padding: 0 16px;
+  box-shadow: 0 0 16px #0003;
+  position: relative;
 
   &__logo {
     width: 100px;
@@ -78,6 +84,10 @@ export default {
 
   .el-menu.el-menu--horizontal {
     border: none;
+  }
+
+  &__nav-item {
+    border: none!important;
   }
 
   .el-menu-item {

@@ -7,7 +7,7 @@
         </div>
         <div class="home-screen-welcome__desc">
           Invest Factors is a project created
-          for long term investors intended to&nbsp;track
+          for long-term investors intended to&nbsp;track
           actual state of&nbsp;potential company
           growth&nbsp;&amp;&nbsp;falls factors
         </div>
@@ -29,8 +29,6 @@ export default {
 
 <style lang="scss">
 .home {
-  display: grid;
-
   & > * {
     padding: 60px 120px;
     box-sizing: border-box;
@@ -41,14 +39,18 @@ export default {
       background: #3c5ecd url('./assets/img/bg.png');
       background-size: cover;
       background-position: center;
-      height: calc(100vh - 61px);
+      height: calc(100vh - 60px);
       text-align: left;
       color: white;
 
+      @media(max-width: 767px) {
+        padding: 60px 32px;
+      }
+
       &__content{
-        width: 350px;
+        max-width: 340px;
         display: grid;
-        grid-gap: 16px;
+        grid-gap: 24px;
       }
 
       &__header {
@@ -57,7 +59,7 @@ export default {
         line-height: 1;
       }
       &__desc {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.4;
         font-weight: lighter;
         opacity: 0.7;

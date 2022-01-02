@@ -1,5 +1,5 @@
 <template>
-  <div class="stock">
+  <div class="stocks">
     <StockList :stocks="stocks" :page="page" />
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
-.stock{
+.stocks {
   padding: 16px;
 }
 </style>
