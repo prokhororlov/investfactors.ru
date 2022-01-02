@@ -1,14 +1,14 @@
 <template>
-  <div class="stock-list">
+  <div class="stocks-list">
     <el-table
       v-loading="!tableData.length"
       :data="tableData"
-      class="stock-list__table"
+      class="stocks-list__table"
       style="width: 100%">
       <el-table-column width="45" style="padding: 0">
         <template #default="scope">
           <div
-            class="stock-list__item-logo"
+            class="stocks-list__item-logo"
             :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${
               cleanTicker(scope.row.ticker)
             }.svg), #F3F3F3;`"
@@ -24,7 +24,7 @@
         <template #header>
           <div
             @click="setSortType('NAME')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('NAME')">
             Название
           </div>
@@ -37,7 +37,7 @@
         <template #header>
           <div
             @click="setSortType('PRICE')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('PRICE')">
             Цена
           </div>
@@ -52,16 +52,16 @@
         <template #header>
           <div
             @click="setSortType('CHANGE')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CHANGE')">
             Изменение
           </div>
         </template>
         <template #default="scope">
-          <div class="stock-list__item-change"
+          <div class="stocks-list__item-change"
           :class="{
-            'stock-list__item-change_increased': scope.row.change > 0,
-            'stock-list__item-change_decreased': scope.row.change < 0,
+            'stocks-list__item-change_increased': scope.row.change > 0,
+            'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ scope.row.changePercent }}%
           </div>
@@ -72,7 +72,7 @@
         <template #header>
           <div
             @click="setSortType('CAP')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CAP')">
             Капитализация
           </div>
@@ -86,16 +86,16 @@
         <template #header>
           <div
             @click="setSortType('VOLUME')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('VOLUME')">
             Объём
           </div>
         </template>
         <template #default="scope">
-          <div v-if="scope.row.volume" class="stock-list__item-change"
+          <div v-if="scope.row.volume" class="stocks-list__item-change"
           :class="{
-            'stock-list__item-change_increased': scope.row.change > 0,
-            'stock-list__item-change_decreased': scope.row.change < 0,
+            'stocks-list__item-change_increased': scope.row.change > 0,
+            'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ formatCap(scope.row.volume) }}
           </div>
@@ -107,16 +107,16 @@
         <template #header>
           <div
             @click="setSortType('VOLUME_TO_CAP')"
-            class="stock-list__item-filter"
+            class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('VOLUME_TO_CAP')">
             Объём / Кап.
           </div>
         </template>
         <template #default="scope">
-          <div v-if="scope.row.cap && scope.row.volume" class="stock-list__item-change"
+          <div v-if="scope.row.cap && scope.row.volume" class="stocks-list__item-change"
           :class="{
-            'stock-list__item-change_increased': scope.row.change > 0,
-            'stock-list__item-change_decreased': scope.row.change < 0,
+            'stocks-list__item-change_increased': scope.row.change > 0,
+            'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ scope.row.volumeToCap }}%
           </div>
@@ -136,6 +136,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      small
       v-if="tableData.length"
       background
       layout="prev, pager, next"
@@ -262,9 +263,9 @@ export default {
     },
     getSortActiveClassConstructor(sortType) {
       return {
-        'stock-list__item-filter_active': sortType === this.sortType && this.sortStage,
-        'stock-list__item-filter_up': sortType === this.sortType && this.sortStage === 1,
-        'stock-list__item-filter_down': sortType === this.sortType && this.sortStage === 2,
+        'stocks-list__item-filter_active': sortType === this.sortType && this.sortStage,
+        'stocks-list__item-filter_up': sortType === this.sortType && this.sortStage === 1,
+        'stocks-list__item-filter_down': sortType === this.sortType && this.sortStage === 2,
       };
     },
   },
@@ -285,7 +286,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .stock-list {
+  .stocks-list {
     display: grid;
     grid-auto-flow: row;
     grid-gap: 16px;
