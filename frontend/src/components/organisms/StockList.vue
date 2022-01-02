@@ -5,32 +5,24 @@
       :data="tableData"
       class="stocks-list__table"
       style="width: 100%">
-      <el-table-column width="45" style="padding: 0">
-        <template #default="scope">
-          <div
-            class="stocks-list__item-logo"
-            :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${
-              cleanTicker(scope.row.ticker)
-            }.svg), #F3F3F3;`"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column label="Тикер" width="70">
-        <template #default="scope">
-          {{cleanTicker(scope.row.ticker) }}
-        </template>
-      </el-table-column>
-      <el-table-column>
+      <el-table-column style="padding: 0">
         <template #header>
-          <div
-            @click="setSortType('NAME')"
-            class="stocks-list__item-filter"
-            :class="getSortActiveClassConstructor('NAME')">
-            Название
-          </div>
+          <el-input v-model="search" placeholder="Поиск" />
         </template>
         <template #default="scope">
-          {{ scope.row.name }}
+          <router-link
+            class="stocks-list__item-link"
+            :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
+            <div
+              class="stocks-list__item-logo"
+              :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${
+                cleanTicker(scope.row.ticker)
+              }.svg), #F3F3F3;`" />
+            <div class="stocks-list__item-name" >
+              {{ cleanTicker(scope.row.ticker) }}
+              <span> / {{ scope.row.name }}</span>
+            </div>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column>
@@ -121,17 +113,6 @@
             {{ scope.row.volumeToCap }}%
           </div>
           <template v-else>-</template>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="right">
-        <template #header>
-          <el-input v-model="search" placeholder="Что ищем?" />
-        </template>
-        <template #default="scope">
-          <router-link :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
-            Перейти к компании
-          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -300,10 +281,36 @@ export default {
       min-height: 450px;
       .cell {
         white-space: nowrap;
+        line-height: 1;
+        margin: -1px;
       }
     }
 
+    .el-table_1_column_1 .cell {
+      padding-left: 1px;
+    }
+
     &__item {
+      &-link{
+        display: inline-grid;
+        align-items: center;
+        grid-auto-flow: column;
+        grid-gap: 8px;
+        line-height: 1;
+      }
+
+      &-logo {
+        border: 1px solid #E8E8E8;
+        width: 25px;
+        height: 25px;
+        border-radius: 25px;
+      }
+
+      @media (max-width: 991px ) {
+        &-name span{
+          display: none;
+        }
+      }
 
       &-filter {
         cursor: pointer;
@@ -318,13 +325,6 @@ export default {
         &_down::after{
           content: '↓';
         }
-      }
-
-      &-logo {
-        border: 1px solid #E8E8E8;
-        width: 25px;
-        height: 25px;
-        border-radius: 25px;
       }
 
       &-change {

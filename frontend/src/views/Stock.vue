@@ -47,10 +47,10 @@ export default {
   &__metrics { grid-area: metrics; }
 
   &__info {
-    height: 173px!important;
+    height: 171px!important;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: calc(768px + 35px)) {
     grid-template-areas:
       "info"
       "chart"
@@ -62,7 +62,7 @@ export default {
     }
 
     &__info {
-      height: 228px!important;
+      height: 248px!important;
     }
   }
 

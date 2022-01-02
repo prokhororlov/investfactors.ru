@@ -1,25 +1,24 @@
 <template>
   <div class="header">
     <div class="header__left">
-      <img :src="logo" class="header__logo" alt="">
+      <router-link to="/">
+        <img :src="logo" class="header__logo" alt="">
+      </router-link>
     </div>
     <el-menu mode="horizontal" class="header__middle"
       :default-active="activeIndex"
       @click="onClickMenuItem">
       <el-menu-item index="0" class="header__nav-item">
-        <router-link to="/">Home</router-link>
-      </el-menu-item>
-      <el-menu-item index="1" class="header__nav-item">
-        <router-link to="/stocks/">Stocks</router-link>
+        <router-link to="/stocks/">Котировки</router-link>
       </el-menu-item>
     </el-menu>
     <div class="header__right">
       <template v-if="$auth.authenticated">
-        <el-button @click="logout">LogOut</el-button>
+        <el-button @click="logout">Выйти</el-button>
         <el-avatar shape="circle" :size="32" :src="$auth.user?.picture" />
       </template>
       <template v-else>
-        <el-button @click="login">LogIn</el-button>
+        <el-button @click="login">Войти</el-button>
       </template>
     </div>
   </div>

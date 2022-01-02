@@ -8,9 +8,10 @@
       symbol: ticker,
       theme: theme,
       interval: 'D',
-      toolbarbg: ({ light: '#f1f3f6' })[theme],
-      withdateranges: 1,
-      hidesidetoolbar: 0,
+      // toolbarbg: ({ light: '#f1f3f6' })[theme],
+      withdateranges: 0,
+      hidesidetoolbar: 1,
+      hidetoptoolbar: 1,
       timezone: dateTimeOptions.timeZone,
       locale: dateTimeOptions.locale,
     }"
