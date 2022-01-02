@@ -3,17 +3,16 @@
     <div class="home-screen-welcome">
       <div class="home-screen-welcome__content">
         <div class="home-screen-welcome__header">
-          Invest wisely with Invest Factors
+          Помогаем инвесторам
+          <span>узнать свои активы ближе</span>
         </div>
         <div class="home-screen-welcome__desc">
-          Invest Factors is a project created
-          for long-term investors intended to&nbsp;track
-          actual state of&nbsp;potential company
-          growth&nbsp;&amp;&nbsp;falls factors
+          Изучайте и добавляйте существенные факты<br>
+          об интересных вам компаниях
         </div>
         <div class="home-screen-welcome__button">
           <router-link to="/stocks/">
-            <el-button>Go to stocks</el-button>
+            <el-button type="success" round>Перейти к котировкам</el-button>
           </router-link>
         </div>
       </div>
@@ -30,7 +29,6 @@ export default {
 <style lang="scss">
 .home {
   & > * {
-    padding: 60px 120px;
     box-sizing: border-box;
   }
   .home-screen{
@@ -42,21 +40,27 @@ export default {
       height: calc(100vh - 60px);
       text-align: left;
       color: white;
+      padding: 80px 120px;
 
       @media(max-width: 767px) {
         padding: 60px 32px;
       }
 
       &__content{
-        max-width: 340px;
+        max-width: 380px;
         display: grid;
         grid-gap: 24px;
       }
 
       &__header {
-        font-size: 40px;
+        font-size: 34px;
         font-weight: bold;
         line-height: 1;
+
+        span {
+          font-size: 30px;
+          font-weight: lighter;
+        }
       }
       &__desc {
         font-size: 16px;

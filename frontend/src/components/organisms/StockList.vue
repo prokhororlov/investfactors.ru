@@ -7,22 +7,20 @@
       style="width: 100%">
       <el-table-column style="padding: 0">
         <template #header>
-          <el-input v-model="search" placeholder="Поиск" />
+          <el-input v-model="search" class="stocks-list__search" placeholder="Поиск" size="small" />
         </template>
         <template #default="scope">
-          <router-link
-            class="stocks-list__item-link"
-            :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
-            <div
-              class="stocks-list__item-logo"
-              :style="`background: url(https://yastatic.net/s3/fintech-icons/1/i/${
-                cleanTicker(scope.row.ticker)
-              }.svg), #F3F3F3;`" />
-            <div class="stocks-list__item-name" >
-              {{ cleanTicker(scope.row.ticker) }}
-              <span> / {{ scope.row.name }}</span>
-            </div>
-          </router-link>
+          <div class="stocks-list__item-link">
+            <router-link :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
+              <div
+                class="stocks-list__item-logo"
+                :style="`
+                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${cleanTicker(scope.row.ticker)}.svg), #F3F3F3;
+                `" />
+              <div class="stocks-list__item-ticker" >{{ cleanTicker(scope.row.ticker) }}</div>
+            </router-link>
+            <div class="stocks-list__item-ticker" >{{ scope.row.name }}</div>
+          </div>
         </template>
       </el-table-column>
       <el-table-column>
@@ -124,7 +122,7 @@
       @current-change="handleCurrentPageChange"
       :page-size="pageSize"
       v-model:currentPage="currentPage"
-      :total="stocks.length" />
+      :total="fitSearch.length" />
   </div>
 </template>
 
@@ -140,14 +138,25 @@ export default {
   },
   data() {
     return {
-      search: '',
+      search: this.$route.query.search || '',
       currentPage: +this.$route.query.page || 1, // почему-то не работает ни в какую
       pageSize: 20,
-      sortType: SORT_TYPES.CAP,
-      sortStage: 1,
+      sortType: this.$route.query.sort_by || SORT_TYPES.CAP,
+      sortStage: this.$route.query.sort_stage || 1,
     };
   },
   methods: {
+    fixQueryState() {
+      this.$router.push({
+        path: '/stocks/',
+        query: {
+          page: this.currentPage || undefined,
+          search: this.search || undefined,
+          sort_by: this.sortType === SORT_TYPES.CAP ? undefined : this.sortType,
+          sort_stage: this.sortStage === 1 ? undefined : this.sortStage,
+        },
+      });
+    },
     sortTable(a, b) {
       switch (this.sortType) {
         case SORT_TYPES.PRICE:
@@ -251,16 +260,25 @@ export default {
     },
   },
   computed: {
+    sortedTable() {
+      return [...this.stocks].sort(this.sortTable);
+    },
+    fitSearch() {
+      return this.sortedTable
+        .filter((data) => (
+          `${data.ticker}/${data.name}`
+            .toLowerCase()
+            .includes(this.search.toLowerCase())));
+    },
     tableData() {
-      const stocks = [...this.stocks].sort(this.sortTable);
-      return this.search
-        ? stocks
-          .filter((data) => (
-            `${data.ticker}/${data.name}`
-              .toLowerCase()
-              .includes(this.search.toLowerCase())))
-        : stocks
-          .slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+      const result = this.search
+        ? this.fitSearch
+        : this.sortedTable.slice(
+          (this.currentPage - 1) * this.pageSize,
+          this.currentPage * this.pageSize,
+        );
+      this.fixQueryState();
+      return result;
     },
   },
 };
@@ -275,6 +293,10 @@ export default {
     a {
       color: lightseagreen;
       text-decoration: none;
+    }
+
+    &__search {
+      margin-right: 50px;
     }
 
     &__table {
@@ -297,6 +319,14 @@ export default {
         grid-auto-flow: column;
         grid-gap: 8px;
         line-height: 1;
+
+        a {
+          display: grid;
+          grid-auto-flow: column;
+          justify-content: space-between;
+          align-items: center;
+          grid-gap: 8px;
+        }
       }
 
       &-logo {
@@ -304,12 +334,6 @@ export default {
         width: 25px;
         height: 25px;
         border-radius: 25px;
-      }
-
-      @media (max-width: 991px ) {
-        &-name span{
-          display: none;
-        }
       }
 
       &-filter {

@@ -5,20 +5,20 @@
         <img :src="logo" class="header__logo" alt="">
       </router-link>
     </div>
-    <el-menu mode="horizontal" class="header__middle"
+    <!-- <el-menu mode="horizontal" class="header__middle"
       :default-active="activeIndex"
       @click="onClickMenuItem">
-      <el-menu-item index="0" class="header__nav-item">
+      <el-menu-item index="1" class="header__nav-item">
         <router-link to="/stocks/">Котировки</router-link>
       </el-menu-item>
-    </el-menu>
+    </el-menu> -->
     <div class="header__right">
       <template v-if="$auth.authenticated">
-        <el-button @click="logout">Выйти</el-button>
+        <el-button @click="logout" round>Выйти</el-button>
         <el-avatar shape="circle" :size="32" :src="$auth.user?.picture" />
       </template>
       <template v-else>
-        <el-button @click="login">Войти</el-button>
+        <el-button @click="login" round>Войти</el-button>
       </template>
     </div>
   </div>
@@ -68,6 +68,7 @@ export default {
   padding: 0 16px;
   box-shadow: 0 0 16px #0003;
   position: relative;
+  height: 60px;
 
   &__logo {
     width: 100px;
