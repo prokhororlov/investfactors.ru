@@ -50,5 +50,6 @@ export default {
 <style lang="scss">
 .stocks {
   padding: 16px;
+  box-sizing: border-box;
 }
 </style>
