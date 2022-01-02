@@ -73,6 +73,10 @@ export default {
   &__logo {
     width: 100px;
     margin-top: -2px;
+
+    @media (max-width: 575px) {
+      width: 80px;
+    }
   }
 
   &__right {
@@ -88,6 +92,7 @@ export default {
 
   &__nav-item {
     border: none!important;
+    padding: 0 8px;
   }
 
   .el-menu-item {
