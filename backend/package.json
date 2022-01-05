@@ -14,6 +14,7 @@
     "express": "^4.17.1",
     "firebase": "^8.7.0",
     "morgan": "^1.10.0",
+    "stocksocket": "^2.1.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {
