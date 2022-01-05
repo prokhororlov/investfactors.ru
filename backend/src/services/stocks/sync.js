@@ -2,7 +2,7 @@
 Is needed to start once in a day e.g. to save
 tickers from Tinkoff Investments
 ------------------------------------------------- */
-const MoexAPI = require('moex-api');
+const MoexAPI = require('../../api/moex');
 const db = require('../../db/connect');
 const TinkoffAPI = require('../tinkoff/api');
 const config = require('../../db/config');
@@ -10,7 +10,7 @@ const logger = require('../../../utils/logger');
 
 const api = {
   tinkoff: TinkoffAPI,
-  moex: new MoexAPI(),
+  moex: MoexAPI,
 };
 
 const data = {
@@ -40,68 +40,20 @@ const getTinkoffStocks = () => (
 );
 
 const getMoexStocks = () => (
-  api.moex.securitiesDataRaw('stock', 'shares', '').then((response) => {
-    // доски (нейминг by MOEX)
-    const boards = {
-      SMAL: {},
-      TQBR: {},
-    };
-
-    // получаем мету
-    response.securities.data
-      .filter((i) => Object.keys(boards).includes(i[1]) && i[3]) // есть на нужной доске и есть цена
-      .map((i) => {
-        const info = {};
-
-        response.securities.columns.map((column, index) => (
-          Object.assign(info, {
-            ...info,
-            [column]: i[index],
-          })
-        ));
-
-        boards[info.BOARDID][info.SECID] = {
-          board: info.BOARDID,
-          ticker: info.SECID,
-          name: info.SECNAME,
-          currency: info.FACEUNIT === 'SUR' ? 'RUB' : info.FACEUNIT,
-        };
-
-        return null;
-      });
-
-    // получаем состояние рынка
-    response.marketdata.data
-      .filter((i) => Object.keys(boards).includes(i[1])) // есть на нужной доске
-      .map((i) => {
-        // собираем информацию по тикеру
-        const info = {};
-        response.marketdata.columns.map((column, index) => {
-          info[column] = i[index];
-          return null;
-        });
-
-        // распределяем по доскам
-        boards[info.BOARDID][info.SECID] = {
-          ...boards[info.BOARDID][info.SECID],
-          price: info.LAST || info.MARKETPRICE || info.LCURRENTPRICE,
-          cap: info.ISSUECAPITALIZATION,
-          change: info.CHANGE || 0,
-          changePercent: Math.floor((info.CHANGE / info.OPEN) * 10000) / 100 || 0,
-          volume: info.VALTODAY,
-          volumeToCap: (info.ISSUECAPITALIZATION
-            && Math.floor(((info.VALTODAY || 0) / info.ISSUECAPITALIZATION) * 10000) / 100) || 0,
-          market: 'MOEX',
-        };
-
-        return null;
-      });
-
-    return {
-      ...boards.SMAL,
-      ...boards.TQBR,
-    };
-  })
+  api.moex.getStocks().then((response) => ({
+    ...Object.values(response).map((item) => ({
+      ticker: item.SECID,
+      name: item.SECNAME,
+      currency: item.CURRENCYID === 'SUR' ? 'RUB' : item.CURRENCYID,
+      price: item.LAST || item.MARKETPRICE || item.LCURRENTPRICE,
+      cap: item.ISSUECAPITALIZATION,
+      change: Math.floor((item.CHANGE / item.OPEN) * 10000) / 100 || 0,
+      volume: item.VALTODAY,
+      volumeToCap: (item.ISSUECAPITALIZATION
+        && Math.floor(((item.VALTODAY || 0) / item.ISSUECAPITALIZATION) * 10000) / 100) || 0,
+      market: 'MOEX',
+    })),
+  }))
 );
 
 const isValidTime = () => {

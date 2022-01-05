@@ -1,7 +1,7 @@
 <template>
   <div class="stocks-list">
     <el-table
-      v-loading="!tableData.length"
+      v-loading="isLoading"
       :data="tableData"
       class="stocks-list__table"
       style="width: 100%">
@@ -35,6 +35,7 @@
         <template #default="scope">
           <div>
             {{ scope.row.price }}
+            {{ ({ USD: '$', RUB: '₽'})[scope.row.currency] }}
           </div>
         </template>
       </el-table-column>
@@ -53,7 +54,7 @@
             'stocks-list__item-change_increased': scope.row.change > 0,
             'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
-            {{ scope.row.changePercent }}%
+            {{ scope.row.change }}%
           </div>
         </template>
       </el-table-column>
@@ -135,6 +136,7 @@ export default {
   name: 'StockList',
   props: {
     stocks: Array,
+    isLoading: Boolean,
   },
   data() {
     return {
@@ -176,8 +178,8 @@ export default {
             a.volumeToCap - b.volumeToCap][this.sortStage - 1];
         case SORT_TYPES.CHANGE:
           return [
-            b.changePercent - a.changePercent,
-            a.changePercent - b.changePercent][this.sortStage - 1];
+            b.change - a.change,
+            a.change - b.change][this.sortStage - 1];
         case SORT_TYPES.CAP: {
           const aCap = a.cap || 0;
           const bCap = b.cap || 0;

@@ -1,6 +1,6 @@
 <template>
   <div class="stocks">
-    <StockList :stocks="stocks" :page="page" />
+    <StockList :stocks="stocks" :page="page" :isLoading="isLoading" />
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       isPending: false,
       stocks: [],
       interval: null,
@@ -33,6 +34,7 @@ export default {
           this.stocks = [...response.data];
         })
         .finally(() => {
+          this.isLoading = false;
           this.isPending = false;
         });
     },
