@@ -1,12 +1,9 @@
-/* -------------------------------------------------
-Is needed to start once in a day e.g. to save
-tickers from Tinkoff Investments
-------------------------------------------------- */
-const MoexAPI = require('../../api/moex');
 const db = require('../../db/connect');
-const TinkoffAPI = require('../tinkoff/api');
 const config = require('../../db/config');
 const logger = require('../../../utils/logger');
+
+const TinkoffAPI = require('../../api/tinkoff');
+const MoexAPI = require('../../api/moex');
 
 const api = {
   tinkoff: TinkoffAPI,
