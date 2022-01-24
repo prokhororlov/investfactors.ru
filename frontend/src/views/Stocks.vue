@@ -1,6 +1,10 @@
 <template>
   <div class="stocks">
-    <StockList :stocks="stocks" :page="page" :isLoading="isLoading" />
+    <div style="dispal: flex">
+      <el-button :disabled="market === 'RU'" @click="setMarket('RU')">РФ</el-button>
+      <el-button :disabled="market === 'US'" @click="setMarket('US')">US</el-button>
+    </div>
+    <StockList :stocks="stocks" :isLoading="isLoading" :market="market" />
   </div>
 </template>
 
@@ -11,9 +15,6 @@ const axios = require('axios');
 
 export default {
   name: 'Stocks',
-  props: {
-    page: Number,
-  },
   components: {
     StockList,
   },
@@ -23,15 +24,25 @@ export default {
       isPending: false,
       stocks: [],
       interval: null,
+      market: this.$route.query.market || 'RU',
     };
   },
   methods: {
+    setMarket(market) {
+      this.market = market;
+    },
     getStocks() {
       if (this.isPending) return;
       this.isPending = true;
-      axios.post('/api/stocks')
+      axios.post('/api/stocks', {
+        page: this.$route.query.page,
+        search: this.$route.query.search,
+        sort_type: this.$route.query.sort_by,
+        sort_stage: this.$route.query.sort_stage,
+        market: this.$route.query.market,
+      })
         .then((response) => {
-          this.stocks = [...Object.values(response.data)];
+          this.stocks = response.data;
         })
         .finally(() => {
           this.isLoading = false;
@@ -45,6 +56,17 @@ export default {
   },
   beforeUnmount() {
     clearInterval(this.interval);
+  },
+  computed: {
+    query() {
+      return this.$route.query;
+    },
+  },
+  watch: {
+    query() {
+      this.isLoading = true;
+      this.getStocks();
+    },
   },
 };
 </script>

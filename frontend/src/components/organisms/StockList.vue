@@ -3,7 +3,7 @@
     <el-table
       border
       v-loading="isLoading"
-      :data="tableData"
+      :data="stocks.data"
       class="stocks-list__table"
       style="width: 100%">
       <el-table-column style="padding: 0">
@@ -12,13 +12,13 @@
         </template>
         <template #default="scope">
           <div class="stocks-list__item-link">
-            <router-link :to="`/stocks/${scope.row.market}:${cleanTicker(scope.row.ticker)}`">
+            <router-link :to="`/stocks/${scope.row.market}:${scope.row.ticker}`">
               <div
                 class="stocks-list__item-logo"
                 :style="`
-                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${cleanTicker(scope.row.ticker)}.svg), #F3F3F3;
+                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${scope.row.ticker}.svg), #F3F3F3;
                 `" />
-              <div class="stocks-list__item-ticker" >{{ cleanTicker(scope.row.ticker) }}</div>
+              <div class="stocks-list__item-ticker" >{{ scope.row.ticker }}</div>
             </router-link>
             <div class="stocks-list__item-name" >{{ scope.row.name }}</div>
           </div>
@@ -123,13 +123,13 @@
     </el-table>
     <el-pagination
       small
-      v-if="tableData.length"
+      v-if="stocks?.data?.length"
       background
       layout="prev, pager, next"
       @current-change="handleCurrentPageChange"
-      :page-size="pageSize"
+      :page-size="stocks?.meta.page_size"
       v-model:currentPage="currentPage"
-      :total="fitSearch.length" />
+      :total="stocks?.meta.total" />
   </div>
 </template>
 
@@ -138,91 +138,57 @@
 const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME', 'VOLUME_TO_CAP']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
+const SORT_STAGES = ['UP', 'DOWN']
+  .reduce((t, i) => ({ ...t, [i]: i }), {});
+
 export default {
   name: 'StockList',
   props: {
-    stocks: Array,
+    stocks: {
+      meta: Object,
+      data: Array,
+    },
+    market: String,
     isLoading: Boolean,
   },
   data() {
     return {
       search: this.$route.query.search || '',
-      currentPage: +this.$route.query.page || 1, // почему-то не работает ни в какую
-      pageSize: 20,
+      currentPage: +this.$route.query.page || 1,
       sortType: this.$route.query.sort_by || SORT_TYPES.CAP,
-      sortStage: this.$route.query.sort_stage || 1,
+      sortStage: this.$route.query.sort_stage || SORT_STAGES.UP,
+
     };
   },
   methods: {
     fixQueryState() {
       this.$router.push({
         path: '/stocks/',
-        query: {
-          page: this.currentPage || undefined,
-          search: this.search || undefined,
-          sort_by: this.sortType === SORT_TYPES.CAP ? undefined : this.sortType,
-          sort_stage: this.sortStage === 1 ? undefined : this.sortStage,
-        },
+        query: this.query,
       });
-    },
-    sortTable(a, b) {
-      switch (this.sortType) {
-        case SORT_TYPES.PRICE:
-          return [
-            b.price - a.price,
-            a.price - b.price][this.sortStage - 1];
-        case SORT_TYPES.VOLUME: {
-          const aVol = a.volume || 0;
-          const bVol = b.volume || 0;
-          return [
-            bVol - aVol,
-            aVol - bVol][this.sortStage - 1];
-        }
-        case SORT_TYPES.VOLUME_TO_CAP:
-          return [
-            b.volumeToCap - a.volumeToCap,
-            a.volumeToCap - b.volumeToCap][this.sortStage - 1];
-        case SORT_TYPES.CHANGE:
-          return [
-            b.change - a.change,
-            a.change - b.change][this.sortStage - 1];
-        case SORT_TYPES.CAP: {
-          const aCap = a.cap || 0;
-          const bCap = b.cap || 0;
-          return [
-            bCap - aCap,
-            aCap - bCap][this.sortStage - 1];
-        }
-        case SORT_TYPES.NAME:
-        default:
-          return [
-            a.name.localeCompare(b.name),
-            b.name.localeCompare(a.name)][this.sortStage - 1];
-      }
     },
     setSortType(type) {
       switch (this.sortStage) {
-        case 1:
+        case SORT_STAGES.UP:
           if (this.sortType === type) {
-            this.sortStage = 2;
+            this.sortStage = SORT_STAGES.DOWN;
           } else {
-            this.sortStage = 1;
+            this.sortStage = SORT_STAGES.UP;
             this.sortType = type;
           }
           break;
-        case 2:
+        case SORT_STAGES.DOWN:
           if (this.sortType === type) {
-            this.sortStage = 1;
+            this.sortStage = SORT_STAGES.UP;
             this.sortType = SORT_TYPES.CAP;
           } else {
-            this.sortStage = 1;
+            this.sortStage = SORT_STAGES.UP;
             this.sortType = type;
           }
           break;
-        case 0:
         default:
-          this.sortStage = 1;
           this.sortType = SORT_TYPES.CAP;
+          this.sortStage = SORT_STAGES.UP;
       }
 
       this.currentPage = 1;
@@ -243,19 +209,6 @@ export default {
           }).format(cap.value)} ${cap.measure}`
         : '-';
     },
-    cleanTicker(ticker) {
-      return ticker.replace(/@.*$/g, '');
-    },
-    getLogoURL(index) {
-      const ticker = this.cleanTicker(this.getStock(index).ticker);
-      return `https://yastatic.net/s3/fintech-icons/1/i/${ticker}.svg`;
-    },
-    getAbsoluteIndex(index) {
-      return index + (this.currentPage - 1) * this.pageSize;
-    },
-    getStock(index) {
-      return this.stocks[this.getAbsoluteIndex(index)];
-    },
     handleCurrentPageChange(page) {
       this.$router.push({ path: '/stocks/', query: { page } });
       window.scrollTo({
@@ -266,31 +219,27 @@ export default {
     getSortActiveClassConstructor(sortType) {
       return {
         'stocks-list__item-filter_active': sortType === this.sortType && this.sortStage,
-        'stocks-list__item-filter_up': sortType === this.sortType && this.sortStage === 1,
-        'stocks-list__item-filter_down': sortType === this.sortType && this.sortStage === 2,
+        'stocks-list__item-filter_up': sortType === this.sortType && this.sortStage === SORT_STAGES.UP,
+        'stocks-list__item-filter_down': sortType === this.sortType && this.sortStage === SORT_STAGES.DOWN,
       };
     },
   },
   computed: {
-    sortedTable() {
-      return [...this.stocks].sort(this.sortTable);
+    query() {
+      return {
+        page: this.currentPage || 1,
+        search: this.search || undefined,
+        sort_by: this.sortType,
+        sort_stage: this.sortStage,
+        market: this.market,
+      };
     },
-    fitSearch() {
-      return this.sortedTable
-        .filter((data) => (
-          `${data.ticker}/${data.name}`
-            .toLowerCase()
-            .includes(this.search.toLowerCase())));
-    },
-    tableData() {
-      const result = this.search
-        ? this.fitSearch
-        : this.sortedTable.slice(
-          (this.currentPage - 1) * this.pageSize,
-          this.currentPage * this.pageSize,
-        );
-      this.fixQueryState();
-      return result;
+  },
+  watch: {
+    query() { this.fixQueryState(); },
+    market() {
+      this.currentPage = 1;
+      this.handleCurrentPageChange(1);
     },
   },
 };
