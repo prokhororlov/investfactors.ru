@@ -31,7 +31,7 @@ export default {
       this.isPending = true;
       axios.post('/api/stocks')
         .then((response) => {
-          this.stocks = [...response.data];
+          this.stocks = [...Object.values(response.data)];
         })
         .finally(() => {
           this.isLoading = false;

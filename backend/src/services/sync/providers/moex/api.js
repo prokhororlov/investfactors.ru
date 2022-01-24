@@ -31,7 +31,7 @@ function getStocks(query) {
         insertToRes(arrSetToObj(marketdata.columns, marketdata.data[i]));
       });
 
-      return result;
+      return Object.values(result);
     });
 }
 

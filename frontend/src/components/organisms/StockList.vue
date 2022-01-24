@@ -1,6 +1,7 @@
 <template>
   <div class="stocks-list">
     <el-table
+      border
       v-loading="isLoading"
       :data="tableData"
       class="stocks-list__table"
@@ -34,7 +35,7 @@
           </div>
         </template>
         <template #default="scope">
-          {{ formatCap(scope.row.cap) }}
+          {{ formatCap(scope.row.cap, scope.row.currency) }}
         </template>
       </el-table-column>
 
@@ -49,8 +50,11 @@
         </template>
         <template #default="scope">
           <div>
-            {{ scope.row.price }}
-            {{ ({ USD: '$', RUB: '₽'})[scope.row.currency] }}
+            {{
+              scope.row.price
+                ? `${scope.row.price} ${({ USD: '$', RUB: '₽'})[scope.row.currency]}`
+                : '-'
+            }}
           </div>
         </template>
       </el-table-column>
@@ -70,7 +74,7 @@
             'stocks-list__item-change_increased': scope.row.change > 0,
             'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
-            {{ scope.row.change }}%
+            {{ scope.row.change ? `${scope.row.change}%` : '-' }}
           </div>
         </template>
       </el-table-column>
@@ -90,7 +94,7 @@
             'stocks-list__item-change_increased': scope.row.change > 0,
             'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
-            {{ formatCap(scope.row.volume) }}
+            {{ formatCap(scope.row.volume, scope.row.currency) }}
           </div>
           <template v-else>-</template>
         </template>
@@ -108,8 +112,8 @@
         <template #default="scope">
           <div v-if="scope.row.cap && scope.row.volume" class="stocks-list__item-change"
           :class="{
-            'stocks-list__item-change_increased': scope.row.volumeToCap > 0,
-            'stocks-list__item-change_decreased': scope.row.volumeToCap < 0,
+            'stocks-list__item-change_increased': scope.row.change > 0,
+            'stocks-list__item-change_decreased': scope.row.change < 0,
           }">
             {{ scope.row.volumeToCap }}%
           </div>
@@ -224,7 +228,7 @@ export default {
       this.currentPage = 1;
       this.handleCurrentPageChange(1);
     },
-    formatCap(value) {
+    formatCap(value, currency) {
       let cap = { value, measure: '' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
@@ -232,7 +236,11 @@ export default {
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
-        ? `${new Intl.NumberFormat('en', { fraction: 3 }).format(cap.value)} ${cap.measure}`
+        ? `${
+          new Intl.NumberFormat(({ USD: 'en-US', RUB: 'ru-RU' })[currency], {
+            style: 'currency',
+            currency,
+          }).format(cap.value)} ${cap.measure}`
         : '-';
     },
     cleanTicker(ticker) {
@@ -301,10 +309,12 @@ export default {
 
     &__search {
       margin-right: 50px;
+      max-width: 250px;
     }
 
     &__table {
       min-height: 450px;
+      margin-top: 16px;
       .cell {
         white-space: nowrap;
         line-height: 1;

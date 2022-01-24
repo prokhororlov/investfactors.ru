@@ -27,4 +27,4 @@ app.listen(PORT, () => {
   logger.info('Server started at: http://localhost');
 });
 
-syncStocks.start();
+syncStocks.init();
