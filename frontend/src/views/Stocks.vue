@@ -41,7 +41,7 @@ export default {
   },
   mounted() {
     this.getStocks();
-    this.interval = setInterval(this.getStocks, 1000 * 5);
+    this.interval = setInterval(this.getStocks, 1000 * 10);
   },
   beforeUnmount() {
     clearInterval(this.interval);
