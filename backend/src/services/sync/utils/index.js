@@ -1,4 +1,7 @@
-const isValidTime = (timeStart, timeEnd) => {
+const isValidTime = (timeStart, timeEnd, days = [1, 2, 3, 4, 5]) => {
+  const start = timeStart.split(':').reduce((acc, next) => (Number(acc) * 100 + Number(next)), 0);
+  const end = timeEnd.split(':').reduce((acc, next) => (Number(acc) * 100 + Number(next)), 0);
+
   const date = new Date();
   date.setHours(date.getUTCHours() + 3);
 
@@ -9,12 +12,8 @@ const isValidTime = (timeStart, timeEnd) => {
 
   const currentTime = +[hours, minutes, seconds].join('');
 
-  return ![6, 7].includes[day] // exclude weekends
-    && currentTime > (timeStart + 1500) // 06:59:59 (trading start)
-    && (timeStart < timeEnd
-      ? currentTime < (timeEnd + 1500)
-      : currentTime <= 235959
-        || (currentTime >= 0 && currentTime < (timeEnd + 1500))); // 23:59:59 (trading start)
+  return days.includes(day)
+    && ((currentTime > start && currentTime <= 235959) || (currentTime < end && currentTime > 0));
 };
 
 const arrToMap = (arr, key) => {

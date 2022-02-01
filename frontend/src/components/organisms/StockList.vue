@@ -71,10 +71,10 @@
         <template #default="scope">
           <div class="stocks-list__item-change"
           :class="{
-            'stocks-list__item-change_increased': scope.row.change > 0,
-            'stocks-list__item-change_decreased': scope.row.change < 0,
+            'stocks-list__item-change_increased': scope.row.change > 0 && scope.row.price,
+            'stocks-list__item-change_decreased': scope.row.change < 0 && scope.row.price,
           }">
-            {{ scope.row.change ? `${scope.row.change}%` : '-' }}
+            {{ scope.row.change && scope.row.price ? `${scope.row.change}%` : '-' }}
           </div>
         </template>
       </el-table-column>
@@ -89,11 +89,7 @@
           </div>
         </template>
         <template #default="scope">
-          <div v-if="scope.row.volume" class="stocks-list__item-change"
-          :class="{
-            'stocks-list__item-change_increased': scope.row.change > 0,
-            'stocks-list__item-change_decreased': scope.row.change < 0,
-          }">
+          <div v-if="scope.row.volume">
             {{ formatCap(scope.row.volume, scope.row.currency) }}
           </div>
           <template v-else>-</template>
@@ -102,22 +98,27 @@
 
       <el-table-column>
         <template #header>
-          <div
-            @click="setSortType('VOLUME_TO_CAP')"
-            class="stocks-list__item-filter"
-            :class="getSortActiveClassConstructor('VOLUME_TO_CAP')">
-            Объём / Кап.
+          <div>
+            P/E
           </div>
         </template>
         <template #default="scope">
-          <div v-if="scope.row.cap && scope.row.volume" class="stocks-list__item-change"
-          :class="{
-            'stocks-list__item-change_increased': scope.row.change > 0,
-            'stocks-list__item-change_decreased': scope.row.change < 0,
-          }">
-            {{ scope.row.volumeToCap }}%
+          <div>
+            {{ scope.row.pe || '-' }}
           </div>
-          <template v-else>-</template>
+        </template>
+      </el-table-column>
+
+      <el-table-column>
+        <template #header>
+          <div>
+            EPS
+          </div>
+        </template>
+        <template #default="scope">
+          <div>
+            {{ scope.row.eps || '-' }}
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -135,7 +136,7 @@
 
 <script>
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME', 'VOLUME_TO_CAP']
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
 const SORT_STAGES = ['UP', 'DOWN']
@@ -195,7 +196,7 @@ export default {
       this.handleCurrentPageChange(1);
     },
     formatCap(value, currency) {
-      let cap = { value, measure: '' };
+      let cap = { value: value * 1000, measure: '' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };

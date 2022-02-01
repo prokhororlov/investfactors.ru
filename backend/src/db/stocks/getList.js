@@ -7,7 +7,7 @@ const EXCHANGES = {
   US: ['NYSE', 'NASDAQ', 'AMEX'],
 };
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME', 'VOLUME_TO_CAP']
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
 const SORT_STAGES = ['UP', 'DOWN']
@@ -38,10 +38,6 @@ function sortFunction(options) {
         result = [bVol - aVol, aVol - bVol];
         break;
       }
-
-      case SORT_TYPES.VOLUME_TO_CAP:
-        result = [b.volumeToCap - a.volumeToCap, a.volumeToCap - b.volumeToCap];
-        break;
 
       case SORT_TYPES.CHANGE:
         result = [b.change - a.change, a.change - b.change];
