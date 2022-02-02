@@ -11,6 +11,10 @@
     "dev": "sh _ci/start_dev.sh",
     "postinstall": "husky install"
   },
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=14.0.0"
+  },
   "workspaces": [
     "frontend",
     "backend"
