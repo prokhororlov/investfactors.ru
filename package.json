@@ -12,8 +12,9 @@
     "postinstall": "husky install"
   },
   "engines": {
-    "npm": ">=6.0.0",
-    "node": ">=14.0.0"
+    "npm": "6.x",
+    "node": "14.x",
+    "yarn": "1.22.x"
   },
   "workspaces": [
     "frontend",
