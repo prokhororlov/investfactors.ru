@@ -5,7 +5,7 @@
         v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
         :key="item"
         size="mini"
-        :disabled="(this.$route.query.market || 'MOEX') === item"
+        :disabled="(this.market || 'MOEX') === item"
         @click="setMarket(item)">
         {{item}}
       </el-button>
@@ -30,10 +30,12 @@ export default {
       isPending: false,
       stocks: [],
       interval: null,
+      market: this.$route.query.market || 'MOEX',
     };
   },
   methods: {
     setMarket(market) {
+      this.market = market;
       this.$router.push({
         path: '/stocks/',
         query: {
@@ -45,13 +47,7 @@ export default {
     getStocks() {
       if (this.isPending) return;
       this.isPending = true;
-      axios.post('/api/stocks', {
-        page: this.$route.query.page || 1,
-        search: this.$route.query.search,
-        sort_type: this.$route.query.sort_by,
-        sort_stage: this.$route.query.sort_stage,
-        market: this.$route.query.market || 'MOEX',
-      })
+      axios.post('/api/stocks', this.query)
         .then((response) => {
           this.stocks = response.data;
         })
@@ -70,7 +66,13 @@ export default {
   },
   computed: {
     query() {
-      return this.$route.query;
+      return {
+        page: this.$route.query.page || 1,
+        search: this.$route.query.search,
+        sort_type: this.$route.query.sort_by,
+        sort_stage: this.$route.query.sort_stage,
+        market: this.market,
+      };
     },
   },
   watch: {

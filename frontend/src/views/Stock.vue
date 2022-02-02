@@ -1,9 +1,9 @@
 <template>
   <div class="stock" v-if="ticker">
     <Info :ticker="ticker" class="stock__info" />
-    <Chart :ticker="ticker" class="stock__chart" />
-    <Metrics :ticker="ticker" class="stock__metrics" />
-    <Profile :ticker="ticker" class="stock__profile" />
+    <ShortOverview :ticker="ticker" class="stock__chart" />
+    <Metrics :ticker="ticker" class="stock__metrics"/>
+    <Profile :ticker="ticker" class="stock__profile" height="460px" />
     <!-- <Editor /> -->
   </div>
 </template>
@@ -11,17 +11,18 @@
 <script>
 import {
   Info,
-  Chart,
+  // Overview,
   Profile,
   Metrics,
 } from '../packages/TradingView';
+import ShortOverview from '../packages/BestStocks/ShortOverview.vue';
 // import { Editor } from '../components/molecules';
 
 export default {
   name: 'Stock',
   components: {
     Info,
-    Chart,
+    ShortOverview,
     Profile,
     Metrics,
     // Editor,
@@ -62,6 +63,7 @@ export default {
     }
 
     &__info {
+      width: 100%;
       height: 248px!important;
     }
   }

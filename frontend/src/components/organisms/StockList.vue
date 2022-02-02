@@ -8,7 +8,13 @@
       style="width: 100%">
       <el-table-column style="padding: 0">
         <template #header>
-          <el-input v-model="search" class="stocks-list__search" placeholder="Поиск" size="small" />
+          <el-input
+            v-model="search"
+            @change="addSearchQuery"
+            class="stocks-list__search"
+            placeholder="Поиск"
+            size="small"
+          />
         </template>
         <template #default="scope">
           <div class="stocks-list__item-link">
@@ -154,17 +160,19 @@ export default {
   data() {
     return {
       search: this.$route.query.search || '',
-      currentPage: +this.$route.query.page || 1,
+      page: +this.$route.query.page || 1,
       sortType: this.$route.query.sort_by || SORT_TYPES.CAP,
       sortStage: this.$route.query.sort_stage || SORT_STAGES.UP,
-
     };
   },
   methods: {
-    fixQueryState() {
+    addToQuery(data) {
       this.$router.push({
         path: '/stocks/',
-        query: this.query,
+        query: {
+          ...this.$route.query,
+          ...data,
+        },
       });
     },
     setSortType(type) {
@@ -191,8 +199,11 @@ export default {
           this.sortStage = SORT_STAGES.UP;
       }
 
-      this.currentPage = 1;
-      this.handleCurrentPageChange(1);
+      this.addToQuery({
+        page: 1,
+        sort_type: this.sortType,
+        sort_stage: this.sortStage,
+      });
     },
     formatCap(value, currency) {
       let cap = { value, measure: '' };
@@ -210,13 +221,7 @@ export default {
         : '-';
     },
     handleCurrentPageChange(page) {
-      this.$router.push({
-        path: '/stocks/',
-        query: {
-          ...this.$route.query,
-          page,
-        },
-      });
+      this.addToQuery({ page });
       window.scrollTo({
         top: 61 + 16,
         behavior: 'smooth',
@@ -229,23 +234,8 @@ export default {
         'stocks-list__item-filter_down': sortType === this.sortType && this.sortStage === SORT_STAGES.DOWN,
       };
     },
-  },
-  computed: {
-    query() {
-      return {
-        page: this.currentPage || 1,
-        search: this.search || undefined,
-        sort_by: this.sortType,
-        sort_stage: this.sortStage,
-        market: this.$route.query.market,
-      };
-    },
-  },
-  watch: {
-    query() { this.fixQueryState(); },
-    market() {
-      this.currentPage = 1;
-      this.handleCurrentPageChange(1);
+    addSearchQuery() {
+      this.addToQuery({ search: this.search || undefined });
     },
   },
 };
