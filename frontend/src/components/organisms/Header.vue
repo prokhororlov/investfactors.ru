@@ -14,11 +14,11 @@
     </el-menu> -->
     <div class="header__right">
       <template v-if="$auth.authenticated">
-        <el-button @click="logout" round>Выйти</el-button>
+        <el-button size="medium" @click="logout" round>Выйти</el-button>
         <el-avatar shape="circle" :size="32" :src="$auth.user?.picture" />
       </template>
       <template v-else>
-        <el-button @click="login" round>Войти</el-button>
+        <el-button size="medium" @click="login" round>Войти</el-button>
       </template>
     </div>
   </div>
