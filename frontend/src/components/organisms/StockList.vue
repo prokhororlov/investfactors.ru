@@ -196,7 +196,7 @@ export default {
       this.handleCurrentPageChange(1);
     },
     formatCap(value, currency) {
-      let cap = { value: value * 1000, measure: '' };
+      let cap = { value, measure: '' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
       if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };
