@@ -3,15 +3,19 @@ const gt = require('./providers/gt');
 
 const db = require('../../db/connect');
 const config = require('../../db/config');
+
+const ref = db.database().ref(config.refs.stocks);
+
 const logger = require('../../../utils/logger');
 
-const { arrToMap, isValidTime } = require('./utils');
+const { isValidTime } = require('./utils');
 
 let isPending = false;
 
 function save(instruments) {
-  return db.database().ref(config.refs.stocks).set(instruments)
-    .then(() => logger.info(`Successfull stocks update: ${Object.keys(instruments).length} set`))
+  const count = Object.values(instruments).map(Object.keys).flat().length;
+  return ref.update(instruments)
+    .then(() => logger.info(`Successfull stocks update: ${count} set`))
     .catch((error) => logger.warn('Stocks update error', error));
 }
 
@@ -19,13 +23,15 @@ function update() {
   const isTradingTime = isValidTime('06:59:59', '01:30:00');
   if (!isTradingTime || isPending) return;
 
+  logger.info('Updating stocks...');
+
   isPending = true;
 
   gt.getStocks()
-    .then((stocks) => {
-      save(arrToMap(stocks.flat(), 'ticker'));
+    .then(save)
+    .catch((error) => {
+      logger.warn('Get stocks error:', error);
     })
-    .catch((error) => logger.warn('Get stocks error', error))
     .finally(() => {
       isPending = false;
     });
@@ -39,7 +45,7 @@ function start() {
 function init() {
   gt.init()
     .then(start)
-    .catch((error) => logger.warn('Init error', error));
+    .catch((error) => logger.warn('Init error:', error));
 }
 
 module.exports = {

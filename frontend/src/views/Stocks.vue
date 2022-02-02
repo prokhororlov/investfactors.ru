@@ -1,10 +1,16 @@
 <template>
   <div class="stocks">
-    <div style="dispal: flex">
-      <el-button :disabled="market === 'RU'" @click="setMarket('RU')">РФ</el-button>
-      <el-button :disabled="market === 'US'" @click="setMarket('US')">US</el-button>
+    <div style="display: flex">
+      <el-button
+        v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
+        :key="item"
+        size="mini"
+        :disabled="(this.$route.query.market || 'MOEX') === item"
+        @click="setMarket(item)">
+        {{item}}
+      </el-button>
     </div>
-    <StockList :stocks="stocks" :isLoading="isLoading" :market="market" />
+    <StockList :stocks="stocks" :isLoading="isLoading" />
   </div>
 </template>
 
@@ -24,22 +30,27 @@ export default {
       isPending: false,
       stocks: [],
       interval: null,
-      market: this.$route.query.market || 'RU',
     };
   },
   methods: {
     setMarket(market) {
-      this.market = market;
+      this.$router.push({
+        path: '/stocks/',
+        query: {
+          ...this.$route.query,
+          market,
+        },
+      });
     },
     getStocks() {
       if (this.isPending) return;
       this.isPending = true;
       axios.post('/api/stocks', {
-        page: this.$route.query.page,
+        page: this.$route.query.page || 1,
         search: this.$route.query.search,
         sort_type: this.$route.query.sort_by,
         sort_stage: this.$route.query.sort_stage,
-        market: this.$route.query.market,
+        market: this.$route.query.market || 'MOEX',
       })
         .then((response) => {
           this.stocks = response.data;

@@ -149,7 +149,6 @@ export default {
       meta: Object,
       data: Array,
     },
-    market: String,
     isLoading: Boolean,
   },
   data() {
@@ -211,7 +210,13 @@ export default {
         : '-';
     },
     handleCurrentPageChange(page) {
-      this.$router.push({ path: '/stocks/', query: { page } });
+      this.$router.push({
+        path: '/stocks/',
+        query: {
+          ...this.$route.query,
+          page,
+        },
+      });
       window.scrollTo({
         top: 61 + 16,
         behavior: 'smooth',
@@ -232,7 +237,7 @@ export default {
         search: this.search || undefined,
         sort_by: this.sortType,
         sort_stage: this.sortStage,
-        market: this.market,
+        market: this.$route.query.market,
       };
     },
   },

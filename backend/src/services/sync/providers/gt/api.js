@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const doc = new GoogleSpreadsheet(process.env.GD_TABLE);
@@ -11,6 +12,18 @@ async function init() {
   });
 
   await doc.loadInfo();
+}
+
+async function getCurrencies() {
+  const sheet = doc.sheetsByTitle.currencies;
+  const grid = sheet.gridProperties;
+  await sheet.loadCells(`A1:${alpha[grid.columnCount]}${grid.rowCount}`);
+
+  return Array.from(Array(grid.rowCount).keys())
+    .reduce((acc, i) => ({
+      ...acc,
+      [sheet.getCell(i, 0).value]: sheet.getCell(i, 1).value,
+    }), {});
 }
 
 async function getStocks(title) {
@@ -49,5 +62,6 @@ async function getRows(title, from, to) {
 module.exports = {
   getRows,
   getStocks,
+  getCurrencies,
   init,
 };

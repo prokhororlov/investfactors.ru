@@ -2,10 +2,6 @@ const db = require('../connect');
 const config = require('../config');
 
 const PAGE_SIZE = 20;
-const EXCHANGES = {
-  RU: ['MOEX'],
-  US: ['NYSE', 'NASDAQ', 'AMEX'],
-};
 
 const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
@@ -67,13 +63,10 @@ module.exports = async (req, res) => {
       search: req.body.search || '',
       sort_type: req.body.sort_type || SORT_TYPES.CAP,
       sort_stage: req.body.sort_stage || SORT_STAGES.UP,
-      market: req.body.market || 'RU',
+      market: req.body.market || 'MOEX',
     };
-    const snapshot = await db.database().ref(config.refs.stocks).once('value');
-    const stocks = Object.values(snapshot.val())
-      .filter((item) => (
-        EXCHANGES[query.market].includes(item.market)
-      ));
+    const snapshot = await db.database().ref(config.refs.stocks).child(query.market).once('value');
+    const stocks = Object.values(snapshot.val());
 
     const searchResult = search({
       data: stocks,
@@ -99,6 +92,6 @@ module.exports = async (req, res) => {
       data: pageResult,
     });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send('error.message');
   }
 };
