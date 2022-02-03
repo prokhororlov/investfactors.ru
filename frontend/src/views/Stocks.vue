@@ -69,7 +69,7 @@ export default {
       return {
         page: this.$route.query.page || 1,
         search: this.$route.query.search,
-        sort_type: this.$route.query.sort_by,
+        sort_type: this.$route.query.sort_type,
         sort_stage: this.$route.query.sort_stage,
         market: this.market,
       };
