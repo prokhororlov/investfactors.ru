@@ -5,7 +5,7 @@
         v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
         :key="item"
         size="mini"
-        :disabled="(this.market || 'MOEX') === item || isLoading"
+        :disabled="(this.market) === item || isLoading"
         @click="setMarket(item)">
         {{item}}
       </el-button>

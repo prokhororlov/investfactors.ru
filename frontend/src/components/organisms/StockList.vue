@@ -96,7 +96,7 @@
         </template>
         <template #default="scope">
           <div v-if="scope.row.volume">
-            {{ formatCap(scope.row.volume, scope.row.currency) }}
+            {{ formatCap(scope.row.volume * 1000, scope.row.currency) }}
           </div>
           <template v-else>-</template>
         </template>
