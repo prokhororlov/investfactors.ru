@@ -7,7 +7,7 @@
     scrolling="no"
     :style="{
       width: '100%',
-      height: '458px',
+      height: '384px',
       border: '1px solid #e0e3eb',
       borderRadius: '3px',
     }"
