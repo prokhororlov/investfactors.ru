@@ -6,7 +6,7 @@
       :data="stocks.data"
       class="stocks-list__table"
       style="width: 100%">
-      <el-table-column style="padding: 0">
+      <el-table-column style="padding: 0;" :width="width >= 992 ? 250 : 100">
         <template #header>
           <el-input
             v-model="search"
@@ -136,6 +136,7 @@
       @current-change="handleCurrentPageChange"
       :page-size="stocks?.meta.page_size"
       v-model:currentPage="currentPage"
+      :disabled="isLoading"
       :total="stocks?.meta.total" />
   </div>
 </template>
@@ -159,9 +160,10 @@ export default {
   },
   data() {
     return {
+      width: window.innerWidth,
       search: this.$route.query.search || '',
       page: +this.$route.query.page || 1,
-      sortType: this.$route.query.sort_by || SORT_TYPES.CAP,
+      sortType: this.$route.query.sort_type || SORT_TYPES.CAP,
       sortStage: this.$route.query.sort_stage || SORT_STAGES.UP,
     };
   },
@@ -178,21 +180,12 @@ export default {
     setSortType(type) {
       switch (this.sortStage) {
         case SORT_STAGES.UP:
-          if (this.sortType === type) {
-            this.sortStage = SORT_STAGES.DOWN;
-          } else {
-            this.sortStage = SORT_STAGES.UP;
-            this.sortType = type;
-          }
+          this.sortStage = SORT_STAGES.DOWN;
+          this.sortType = type;
           break;
         case SORT_STAGES.DOWN:
-          if (this.sortType === type) {
-            this.sortStage = SORT_STAGES.UP;
-            this.sortType = SORT_TYPES.CAP;
-          } else {
-            this.sortStage = SORT_STAGES.UP;
-            this.sortType = type;
-          }
+          this.sortStage = SORT_STAGES.UP;
+          this.sortType = type;
           break;
         default:
           this.sortType = SORT_TYPES.CAP;
@@ -237,6 +230,12 @@ export default {
     addSearchQuery() {
       this.addToQuery({ search: this.search || undefined });
     },
+    updateWidth() {
+      this.width = window.innerWidth;
+    },
+  },
+  created() {
+    window.addEventListener('resize', this.updateWidth);
   },
 };
 </script>
@@ -260,6 +259,7 @@ export default {
     &__table {
       min-height: 450px;
       margin-top: 16px;
+
       .cell {
         white-space: nowrap;
         line-height: 1;

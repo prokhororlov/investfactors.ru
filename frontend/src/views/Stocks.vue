@@ -5,7 +5,7 @@
         v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
         :key="item"
         size="mini"
-        :disabled="(this.market || 'MOEX') === item"
+        :disabled="(this.market || 'MOEX') === item || isLoading"
         @click="setMarket(item)">
         {{item}}
       </el-button>
@@ -41,6 +41,7 @@ export default {
         query: {
           ...this.$route.query,
           market,
+          page: undefined,
         },
       });
     },
