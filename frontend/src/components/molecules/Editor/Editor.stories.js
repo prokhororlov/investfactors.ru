@@ -2,7 +2,7 @@ import Editor from './Editor.vue';
 import 'element-plus/lib/theme-chalk/index.css';
 
 export default {
-  title: 'Components/molecules/Editor',
+  title: 'components/molecules/Editor',
   component: Editor,
   argTypes: {},
 };

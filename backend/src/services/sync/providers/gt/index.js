@@ -19,6 +19,8 @@ const getFullStocks = (market) => (
         change: item.changepct === 100 ? 0 : item.changepct || 0,
         volume: item.volume || 0,
         shares: item.shares || 0,
+        low52: item.low52 || 0,
+        high52: item.high52 || 0,
         pe: item.pe || '-',
         eps: item.eps || '-',
         market: market.toUpperCase() || '-',

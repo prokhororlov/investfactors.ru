@@ -127,6 +127,23 @@
           </div>
         </template>
       </el-table-column>
+
+      <el-table-column width="120">
+        <template #header>
+          <div>
+            52 недели
+          </div>
+        </template>
+        <template #default="scope">
+          <PriceRange
+            class="stocks-list__price-range"
+            :current="scope.row.price"
+            :min="scope.row.low52"
+            :max="scope.row.high52"
+          />
+        </template>
+      </el-table-column>
+
     </el-table>
     <el-pagination
       small
@@ -143,6 +160,8 @@
 
 <script>
 
+import PriceRange from '../atoms/PriceRange/PriceRange.vue';
+
 const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
@@ -151,6 +170,9 @@ const SORT_STAGES = ['UP', 'DOWN']
 
 export default {
   name: 'StockList',
+  components: {
+    PriceRange,
+  },
   props: {
     stocks: {
       meta: Object,
@@ -260,6 +282,11 @@ export default {
       min-height: 450px;
       margin-top: 16px;
 
+      th {
+        font-size: 12px;
+        font-weight: lighter;
+      }
+
       .cell {
         white-space: nowrap;
         line-height: 1;
@@ -269,6 +296,9 @@ export default {
 
     .el-table_1_column_1 .cell {
       padding-left: 1px;
+    }
+    td.el-table_1_column_8 .cell {
+      padding: 0 4px;
     }
 
     &__item {

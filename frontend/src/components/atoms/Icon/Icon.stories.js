@@ -1,7 +1,7 @@
 import Icon from './Icon.vue';
 
 export default {
-  title: 'Components/molecules/Icon',
+  title: 'components/molecules/Icon',
   component: Icon,
   argTypes: {},
 };
