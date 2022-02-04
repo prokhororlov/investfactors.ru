@@ -6,7 +6,7 @@
       :data="stocks.data"
       class="stocks-list__table"
       style="width: 100%">
-      <el-table-column style="padding: 0;" :width="width >= 992 ? 250 : 100">
+      <el-table-column fixed style="padding: 0;" :width="width >= 992 ? 250 : 100">
         <template #header>
           <el-input
             v-model="search"
