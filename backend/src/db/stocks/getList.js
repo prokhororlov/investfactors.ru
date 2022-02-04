@@ -92,6 +92,6 @@ module.exports = async (req, res) => {
       data: pageResult,
     });
   } catch (error) {
-    res.status(400).send('error.message');
+    res.status(400).send(error.message);
   }
 };

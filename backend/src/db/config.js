@@ -1,6 +1,7 @@
 module.exports = {
   refs: {
     stocks: process.env.NODE_ENV === 'development' ? 'stocks-dev' : 'stocks',
+    details: 'company-detail',
   },
   options: {
     apiKey: process.env.FIRE_API_KEY,

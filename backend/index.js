@@ -22,6 +22,7 @@ APP_URL_MAP.map((url) => (
 ));
 
 app.post('/api/stocks/', db.stocks.getList);
+app.post('/api/details/', db.stocks.getDetails);
 
 app.listen(PORT, () => {
   logger.info('Server started at: http://localhost');

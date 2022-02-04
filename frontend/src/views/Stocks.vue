@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import StockList from '../components/organisms/StockList.vue';
+import axios from 'axios';
 
-const axios = require('axios');
+import StockList from '../components/organisms/StockList.vue';
 
 export default {
   name: 'Stocks',

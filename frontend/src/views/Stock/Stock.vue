@@ -1,30 +1,23 @@
 <template>
   <div class="stock" v-if="ticker">
-    <!-- <Info :ticker="ticker" class="stock__info" /> -->
     <ShortOverview :ticker="ticker" class="stock__chart" />
-    <Metrics :ticker="ticker" class="stock__metrics" :height="386"/>
     <Profile :ticker="ticker" class="stock__profile" :height="386"/>
-    <!-- <Editor /> -->
+    <Metrics :ticker="ticker" class="stock__metrics" :height="386"/>
   </div>
 </template>
 
 <script>
-import {
-  // Info,
-  // Overview,
-  Profile,
-  Metrics,
-} from '../packages/TradingView';
-import ShortOverview from '../packages/BestStocks/ShortOverview.vue';
+import { Metrics } from '../../packages/TradingView';
+import ShortOverview from '../../packages/BestStocks/ShortOverview.vue';
+import Profile from './src/Profile.vue';
 // import { Editor } from '../components/molecules';
 
 export default {
   name: 'Stock',
   components: {
-    // Info,
     ShortOverview,
-    Profile,
     Metrics,
+    Profile,
     // Editor,
   },
   props: {
@@ -38,9 +31,9 @@ export default {
   display: grid;
   padding: 16px;
   grid-template-areas:
-    // "info info info"
     "chart profile"
     "metrics metrics";
+  grid-template-columns: 50%;
 
   // &__info { grid-area: info; }
   &__chart { grid-area: chart; }
@@ -57,6 +50,7 @@ export default {
       "chart"
       "profile"
       "metrics";
+    grid-template-columns: 100%;
 
     // &__chart{
     //   height: 300px!important;
