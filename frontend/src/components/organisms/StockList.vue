@@ -284,7 +284,6 @@ export default {
 
       th {
         font-size: 12px;
-        font-weight: lighter;
       }
 
       .cell {
