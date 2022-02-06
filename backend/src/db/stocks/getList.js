@@ -1,5 +1,6 @@
 const db = require('../connect');
 const config = require('../config');
+const { isValidTime } = require('../../services/sync/utils');
 
 const PAGE_SIZE = 20;
 
@@ -81,6 +82,7 @@ module.exports = async (req, res) => {
       meta: {
         total: sortResult.length,
         page_size: PAGE_SIZE,
+        is_trading: isValidTime('06:59:59', '01:30:00'),
       },
       data: pageResult,
     });

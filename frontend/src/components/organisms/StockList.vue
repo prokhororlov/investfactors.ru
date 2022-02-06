@@ -77,10 +77,16 @@
         <template #default="scope">
           <div class="stocks-list__item-change"
           :class="{
-            'stocks-list__item-change_increased': scope.row.change > 0 && scope.row.price,
-            'stocks-list__item-change_decreased': scope.row.change < 0 && scope.row.price,
+            'stocks-list__item-change_increased': stocks.meta.is_trading
+              && scope.row.change > 0 && scope.row.price,
+            'stocks-list__item-change_decreased': stocks.meta.is_trading
+              && scope.row.change < 0 && scope.row.price,
           }">
-            {{ scope.row.change && scope.row.price ? `${scope.row.change}%` : '-' }}
+            {{
+              stocks.meta.is_trading && scope.row.change && scope.row.price
+                ? `${scope.row.change}%`
+                : '0%'
+            }}
           </div>
         </template>
       </el-table-column>

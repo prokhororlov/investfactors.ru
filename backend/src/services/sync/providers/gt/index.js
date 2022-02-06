@@ -17,7 +17,6 @@ const getFullStocks = (market) => (
         price: item.price || 0,
         cap: Math.max(item.marketcap, item.shares * item.price, 0),
         change: item.changepct === 100 ? 0 : item.changepct || 0,
-        shares: item.shares || 0,
         low52: item.low52 || 0,
         high52: item.high52 || 0,
         pe: item.pe || '-',
