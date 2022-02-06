@@ -87,23 +87,6 @@
 
       <el-table-column>
         <template #header>
-          <div
-            @click="setSortType('VOLUME')"
-            class="stocks-list__item-filter"
-            :class="getSortActiveClassConstructor('VOLUME')">
-            Объём
-          </div>
-        </template>
-        <template #default="scope">
-          <div v-if="scope.row.volumeavg">
-            {{ formatCap(scope.row.volumeavg * 1000, scope.row.currency) }}
-          </div>
-          <template v-else>-</template>
-        </template>
-      </el-table-column>
-
-      <el-table-column>
-        <template #header>
           <div>
             P/E
           </div>
@@ -162,7 +145,7 @@
 
 import PriceRange from '../atoms/PriceRange/PriceRange.vue';
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
 const SORT_STAGES = ['UP', 'DOWN']

@@ -3,7 +3,7 @@ const config = require('../config');
 
 const PAGE_SIZE = 20;
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP', 'VOLUME']
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
 
 const SORT_STAGES = ['UP', 'DOWN']
@@ -27,13 +27,6 @@ function sortFunction(options) {
       case SORT_TYPES.PRICE:
         result = [b.price - a.price, a.price - b.price];
         break;
-
-      case SORT_TYPES.VOLUME: {
-        const aVol = a.volumeavg || 0;
-        const bVol = b.volumeavg || 0;
-        result = [bVol - aVol, aVol - bVol];
-        break;
-      }
 
       case SORT_TYPES.CHANGE:
         result = [b.change - a.change, a.change - b.change];
