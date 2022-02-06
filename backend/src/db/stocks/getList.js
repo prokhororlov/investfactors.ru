@@ -29,8 +29,8 @@ function sortFunction(options) {
         break;
 
       case SORT_TYPES.VOLUME: {
-        const aVol = a.volume || 0;
-        const bVol = b.volume || 0;
+        const aVol = a.volumeavg || 0;
+        const bVol = b.volumeavg || 0;
         result = [bVol - aVol, aVol - bVol];
         break;
       }
