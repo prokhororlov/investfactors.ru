@@ -17,7 +17,7 @@ const getFullStocks = (market) => (
         price: item.price || 0,
         cap: Math.max(item.marketcap, item.shares * item.price, 0),
         change: item.changepct === 100 ? 0 : item.changepct || 0,
-        volume: item.volume || 0,
+        volumeavg: item.volumeavg || 0,
         shares: item.shares || 0,
         low52: item.low52 || 0,
         high52: item.high52 || 0,
@@ -37,7 +37,6 @@ const getStocksCheap = (market) => (
           ...item,
           price: rows[i][2] || cache.market[i].price,
           change: rows[i][3] || cache.market[i].change,
-          volume: rows[i][4] || cache.market[i].volume,
         }))
     ))
     .catch(() => Promise.resolve(cache[market]))
