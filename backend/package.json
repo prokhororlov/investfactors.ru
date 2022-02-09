@@ -8,15 +8,12 @@
     "start": "node index"
   },
   "dependencies": {
-    "@tinkoff/invest-openapi-js-sdk": "^1.5.0",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "financialmodelingprep": "^1.1.0",
     "firebase": "^8.7.0",
     "google-spreadsheet": "^3.2.0",
     "morgan": "^1.10.0",
-    "stocksocket": "^2.1.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {
