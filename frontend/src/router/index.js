@@ -3,7 +3,7 @@ import {
   Home,
   Stocks,
   Stock,
-  Portfolio,
+  Profile,
 } from '../views';
 
 const routes = [
@@ -24,9 +24,9 @@ const routes = [
     component: Stock,
   },
   {
-    path: '/portfolio',
-    name: 'Portfolio',
-    component: Portfolio,
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
   },
   {
     path: '/openStock',

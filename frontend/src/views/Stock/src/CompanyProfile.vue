@@ -1,15 +1,15 @@
 <template>
-  <div class="profile" :style="{ height: `${height}px`}">
+  <div class="company-profile" :style="{ height: `${height}px`}">
     <template v-if="!isLoading">
-      <div class="profile__item">
-        <div class="profile__label">Сектор: </div>
-        <div class="profile__value">{{details.sector}}</div>
+      <div class="company-profile__item">
+        <div class="company-profile__label">Сектор: </div>
+        <div class="company-profile__value">{{details.sector}}</div>
       </div>
-      <div class="profile__item">
-        <div class="profile__label">Отрасль: </div>
-        <div class="profile__value">{{details.industry}}</div>
+      <div class="company-profile__item">
+        <div class="company-profile__label">Отрасль: </div>
+        <div class="company-profile__value">{{details.industry}}</div>
       </div>
-      <div class="profile__desc">
+      <div class="company-profile__desc">
           {{details.desc}}
       </div>
     </template>
@@ -17,10 +17,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-  name: 'Profile',
+  name: 'CompanyProfile',
   props: {
     ticker: String,
     height: Number,
@@ -41,10 +39,7 @@ export default {
       const [market, ticker] = this.ticker.split(':');
 
       this.isLoading = true;
-      axios.post('/api/details', {
-        market,
-        ticker,
-      })
+      this.$store.state.api.getCompanyDetails({ market, ticker })
         .then((response) => {
           this.details.sector = response.data.sector || '-';
           this.details.industry = response.data.industry || '-';
@@ -62,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss">
-.profile {
+.company-profile {
   grid-gap: 4px;
   padding: 20px;
   overflow: hidden;

@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import StockList from '../components/organisms/StockList.vue';
 
 export default {
@@ -48,7 +46,7 @@ export default {
     getStocks() {
       if (this.isPending) return;
       this.isPending = true;
-      axios.post('/api/stocks', this.query)
+      this.$store.state.api.getStocks({ query: this.query })
         .then((response) => {
           this.stocks = response.data;
         })

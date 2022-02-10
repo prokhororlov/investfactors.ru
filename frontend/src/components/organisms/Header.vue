@@ -12,10 +12,31 @@
         <router-link to="/stocks/">Котировки</router-link>
       </el-menu-item>
     </el-menu> -->
-    <div class="header__right">
+    <div class="header__right" v-if="!$auth.user?.loading">
+      <span class="header__user-email">{{ $auth.user?.email }}</span>
       <template v-if="$auth.authenticated">
-        <el-button size="medium" @click="logout" round>Выйти</el-button>
-        <el-avatar shape="circle" :size="32" :src="$auth.user?.picture" />
+        <el-dropdown>
+          <el-avatar
+            class="header__user-pic"
+            shape="circle"
+            :size="32"
+            :src="$auth.user?.picture"
+          />
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item class="header__dropdown-item">
+                <span @click="$router.replace('/profile/')">
+                  <Icon name="person-fill" :size="16"/> Профиль
+                </span>
+              </el-dropdown-item>
+              <el-dropdown-item class="header__dropdown-item">
+                <span @click="logout">
+                  <Icon name="power" :size="16"/> Выйти
+                </span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
       <template v-else>
         <el-button size="medium" @click="login" round>Войти</el-button>
@@ -26,19 +47,29 @@
 
 <script>
 import logo from '../../assets/img/logo.svg';
+import { Icon } from '../atoms';
 
 export default {
+  components: {
+    Icon,
+  },
   data: () => ({
     logo,
   }),
   methods: {
-    login() {
-      this.$auth.loginWithPopup()
-        .then(console.log);
+    async login() {
+      await this.$auth.loginWithPopup();
+      const token = (await this.$auth.getTokenSilently());
+
+      this.$store.commit('setToken', token);
     },
-    logout() {
-      this.$auth.logout();
-      this.$router.push({ path: '/' });
+    async logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin,
+      });
+
+      await this.$auth.handleRedirectCallback();
+      this.$store.commit('setToken', '');
     },
     onClickMenuItem(e) {
       const target = e.path[0];
@@ -82,8 +113,20 @@ export default {
   &__right {
     display: grid;
     grid-auto-flow: column;
+    align-items: center;
     grid-gap: 16px;
     align-items: center;
+  }
+
+  &__user-email {
+    font-size: 12px;
+
+    @media(max-width: 575px) {
+      display: none;;
+    }
+  }
+  &__user-pic {
+    cursor: pointer;
   }
 
   .el-menu.el-menu--horizontal {
@@ -100,6 +143,15 @@ export default {
   }
   a.router-link-exact-active {
     color: lightseagreen!important;
+  }
+  &__dropdown-item > * {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-gap: 4px;
+    justify-content: left;
+    text-decoration: none;
+    font-family: sans-serif;
   }
 }
 </style>

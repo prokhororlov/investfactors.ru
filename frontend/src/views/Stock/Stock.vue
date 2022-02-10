@@ -1,7 +1,7 @@
 <template>
   <div class="stock" v-if="ticker">
     <ShortOverview :ticker="ticker" class="stock__chart" />
-    <Profile :ticker="ticker" class="stock__profile" :height="386"/>
+    <CompanyProfile :ticker="ticker" class="stock__profile" :height="386"/>
     <Metrics :ticker="ticker" class="stock__metrics" :height="386"/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import { Metrics } from '../../packages/TradingView';
 import ShortOverview from '../../packages/BestStocks/ShortOverview.vue';
-import Profile from './src/Profile.vue';
+import CompanyProfile from './src/CompanyProfile.vue';
 // import { Editor } from '../components/molecules';
 
 export default {
@@ -17,7 +17,7 @@ export default {
   components: {
     ShortOverview,
     Metrics,
-    Profile,
+    CompanyProfile,
     // Editor,
   },
   props: {
