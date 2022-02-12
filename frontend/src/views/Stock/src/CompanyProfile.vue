@@ -67,9 +67,19 @@ export default {
   box-sizing: border-box;
   text-align: left;
   line-height: 1.4;
+  font-size: 14px;
+
+  &::-webkit-scrollbar             { width: 5px; height: 5px; }
+  &::-webkit-scrollbar-track       { background: transparent; }
+  &::-webkit-scrollbar-thumb       {
+    background: #9598a1;
+    border-radius: 3px;
+    border: 1px solid #f0f3fa;
+  }
+  &::-webkit-scrollbar-thumb:hover { background:  #9598a1; }
 
   &__item{
-    margin-bottom: 12px;
+    margin-bottom: 4px;
     display: flex;
   }
   &__label{
@@ -77,7 +87,7 @@ export default {
     margin-right: 8px;
   }
   &__desc {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 }
 </style>

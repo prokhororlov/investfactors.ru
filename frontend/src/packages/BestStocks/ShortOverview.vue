@@ -7,11 +7,11 @@
     scrolling="no"
     :style="{
       width: '100%',
-      height: '384px',
+      height: `${height - 2 || 350}px`,
       border: '1px solid #e0e3eb',
       borderRadius: '3px',
     }"
-    :src="`https://beststocks.ru/widget/${tickerFormated}/analysts?id=${tickerFormated}-frame-6219160886`"
+    :src="`https://beststocks.ru/widget/${tickerFormated}?id=${tickerFormated}-frame-6219160886`"
   ></iframe>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   name: 'ShortOverview',
   props: {
     ticker: String,
+    height: String,
   },
   computed: {
     tickerFormated() {

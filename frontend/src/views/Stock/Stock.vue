@@ -1,7 +1,7 @@
 <template>
   <div class="stock" v-if="ticker">
-    <ShortOverview :ticker="ticker" class="stock__chart" />
-    <CompanyProfile :ticker="ticker" class="stock__profile" :height="386"/>
+    <ShortOverview :ticker="ticker" class="stock__chart" :height="367" />
+    <CompanyProfile :ticker="ticker" class="stock__profile" :height="367"/>
     <Metrics :ticker="ticker" class="stock__metrics" :height="386"/>
   </div>
 </template>

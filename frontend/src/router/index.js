@@ -1,32 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import {
-  Home,
-  Stocks,
-  Stock,
-  Profile,
-} from '../views';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('../views/Home/Home.vue'),
   },
   {
     path: '/stocks',
     name: 'Stocks',
-    component: Stocks,
+    component: () => import('../views/Stocks.vue'),
   },
   {
     path: '/stocks/:ticker',
     name: 'Stock',
     props: true,
-    component: Stock,
+    component: () => import('../views/Stock/Stock.vue'),
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile,
+    component: () => import('../views/Profile.vue'),
   },
   {
     path: '/openStock',

@@ -11,6 +11,9 @@
       <el-menu-item index="1" class="header__nav-item">
         <router-link to="/stocks/">Котировки</router-link>
       </el-menu-item>
+      <el-menu-item index="2" class="header__nav-item">
+        <router-link to="/about/">О сервисе</router-link>
+      </el-menu-item>
     </el-menu> -->
     <div class="header__right" v-if="!$auth.user?.loading">
       <span class="header__user-email">{{ $auth.user?.email }}</span>
@@ -24,15 +27,11 @@
           />
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item class="header__dropdown-item">
-                <span @click="$router.replace('/profile/')">
-                  <Icon name="person-fill" :size="16"/> Профиль
-                </span>
+              <el-dropdown-item @click="$router.replace('/profile/')" class="header__dropdown-item">
+                <Icon name="person-fill" :size="16"/> Профиль
               </el-dropdown-item>
-              <el-dropdown-item class="header__dropdown-item">
-                <span @click="logout">
-                  <Icon name="power" :size="16"/> Выйти
-                </span>
+              <el-dropdown-item @click="logout" class="header__dropdown-item">
+                <Icon name="power" :size="16"/> Выйти
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -144,7 +143,7 @@ export default {
   a.router-link-exact-active {
     color: lightseagreen!important;
   }
-  &__dropdown-item > * {
+  &__dropdown-item {
     display: grid;
     grid-auto-flow: column;
     align-items: center;
