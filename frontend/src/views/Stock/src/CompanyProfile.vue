@@ -10,7 +10,7 @@
         <div class="company-profile__value">{{details.industry}}</div>
       </div>
       <div class="company-profile__desc">
-          {{details.desc}}
+        <p v-for="(paragraph, i) of details.desc" :key="i">{{paragraph}}</p>
       </div>
     </template>
   </div>
@@ -29,7 +29,7 @@ export default {
       details: {
         sector: '',
         industry: '',
-        desc: '',
+        desc: [''],
       },
     };
   },
@@ -43,7 +43,7 @@ export default {
         .then((response) => {
           this.details.sector = response.data.sector || '-';
           this.details.industry = response.data.industry || '-';
-          this.details.desc = response.data.desc || 'Пока нет данных о компании';
+          this.details.desc = response.data.desc.replace(/\n+/g, '\n').split('\n') || ['Пока нет данных о компании'];
         })
         .finally(() => {
           this.isLoading = false;
@@ -88,6 +88,10 @@ export default {
   }
   &__desc {
     margin-top: 16px;
+
+    p {
+      margin: 8px 0;
+    }
   }
 }
 </style>
