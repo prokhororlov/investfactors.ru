@@ -20,5 +20,10 @@ createApp(App)
     id: 88216239,
     router,
     env: process.env.NODE_ENV,
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: true,
+    trackHash: true,
   })
   .mount('#app');
