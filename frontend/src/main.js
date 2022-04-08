@@ -1,4 +1,5 @@
 import ElementPlus from 'element-plus';
+import VueYandexMetrika from 'vue-yandex-metrika';
 import 'element-plus/lib/theme-chalk/index.css';
 
 import { createApp } from 'vue';
@@ -15,4 +16,9 @@ createApp(App)
   .use(VueAuth0Plugin, authConfig)
   .use(store)
   .use(router)
+  .use(VueYandexMetrika, {
+    id: 88216239,
+    router,
+    env: process.env.NODE_ENV,
+  })
   .mount('#app');
