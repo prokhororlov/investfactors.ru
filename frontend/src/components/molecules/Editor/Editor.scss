@@ -133,8 +133,9 @@
 .editor {
   display: grid;
   font-family: sans-serif;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
+  text-align: initial;
+  border: 1px solid lightgray;
+  border-radius: 16px;
 
   &__content {
     max-height: 500px;
@@ -148,10 +149,11 @@
 
   &__instruments {
     background: white;
-    padding: 12px 0;
+    padding: 12px;
     border-bottom: 1px solid lightgray;
     display: grid;
     grid-gap: 6px;
+    border-radius: 16px 16px 0 0;
 
     &-row {
       display: grid;
@@ -169,5 +171,9 @@
     padding: 12px;
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+  }
+  .el-button {
+    max-width: 30px;
+    max-height: 30px;
   }
 }

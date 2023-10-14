@@ -22,7 +22,7 @@
               <div
                 class="stocks-list__item-logo"
                 :style="`
-                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${scope.row.ticker}.svg), #F3F3F3;
+                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${normalTicker(scope.row.ticker)}.svg), #F3F3F3;
                 `" />
               <div class="stocks-list__item-ticker" >{{ scope.row.ticker }}</div>
             </router-link>
@@ -212,10 +212,10 @@ export default {
     },
     formatCap(value, currency) {
       let cap = { value, measure: '' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'тыс' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'млн' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'млрд' };
-      // if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'трлн' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };
+      // if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
         ? `${
@@ -244,6 +244,9 @@ export default {
     },
     updateWidth() {
       this.width = window.innerWidth;
+    },
+    normalTicker(ticker) {
+      return ticker.length === 5 && ticker[4] === 'P' ? ticker.slice(0, 4) : ticker;
     },
   },
   created() {
