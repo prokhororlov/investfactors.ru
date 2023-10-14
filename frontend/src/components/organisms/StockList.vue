@@ -12,7 +12,7 @@
             v-model="search"
             @change="addSearchQuery"
             class="stocks-list__search"
-            placeholder="Поиск"
+            placeholder="Search"
             size="small"
           />
         </template>
@@ -37,7 +37,7 @@
             @click="setSortType('CAP')"
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CAP')">
-            Капитализация
+            Market Cap.
           </div>
         </template>
         <template #default="scope">
@@ -51,7 +51,7 @@
             @click="setSortType('PRICE')"
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('PRICE')">
-            Цена
+            Price
           </div>
         </template>
         <template #default="scope">
@@ -71,20 +71,21 @@
             @click="setSortType('CHANGE')"
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CHANGE')">
-            Изменение
+            Change
           </div>
         </template>
         <template #default="scope">
           <div class="stocks-list__item-change"
           :class="{
-            'stocks-list__item-change_increased': stocks.meta.is_trading
-              && scope.row.change > 0 && scope.row.price,
-            'stocks-list__item-change_decreased': stocks.meta.is_trading
-              && scope.row.change < 0 && scope.row.price,
+            'stocks-list__item-change_increased': scope.row.change > 0 && scope.row.price,
+            'stocks-list__item-change_decreased': scope.row.change < 0 && scope.row.price,
+            'stocks-list__item-change_trading': scope.row.market === 'MOEX'
+              ? scope.row.is_trading
+              : stocks.meta.is_trading,
           }">
             {{
-              stocks.meta.is_trading && scope.row.change && scope.row.price
-                ? `${scope.row.change}%`
+              scope.row.change && scope.row.price
+                ? `${(scope.row.change > 0 ? '+' : '') + scope.row.change}%`
                 : '0%'
             }}
           </div>
@@ -120,15 +121,15 @@
       <el-table-column width="120">
         <template #header>
           <div>
-            52 недели
+            {{ market === 'MOEX' ? 'Daily' : '52 weeks' }}
           </div>
         </template>
         <template #default="scope">
           <PriceRange
             class="stocks-list__price-range"
             :current="scope.row.price"
-            :min="scope.row.low52"
-            :max="scope.row.high52"
+            :min="scope.row.low52 ?? scope.row.low"
+            :max="scope.row.high52 ?? scope.row.high"
           />
         </template>
       </el-table-column>
@@ -211,10 +212,10 @@ export default {
     },
     formatCap(value, currency) {
       let cap = { value, measure: '' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'тыс' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'млн' };
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'млрд' };
+      // if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'трлн' };
 
       return value
         ? `${
@@ -247,6 +248,11 @@ export default {
   },
   created() {
     window.addEventListener('resize', this.updateWidth);
+  },
+  computed: {
+    market() {
+      return this.$route.query.market || 'MOEX';
+    },
   },
 };
 </script>
@@ -335,11 +341,15 @@ export default {
       }
 
       &-change {
+        opacity: 0.5;
+        &_trading {
+          opacity: 1;
+        }
         &_increased {
-          color: green;
+          color: #068340;
         }
         &_decreased {
-          color: red;
+          color: #e8082b;
         }
       }
     }

@@ -2,7 +2,7 @@ const gtAPI = require('./api');
 const { arrToMap } = require('../../utils');
 
 const cache = {
-  MOEX: [],
+  // MOEX: [],
   NASDAQ: [],
   NYSE: [],
 };

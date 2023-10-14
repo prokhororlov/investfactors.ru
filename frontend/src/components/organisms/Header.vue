@@ -5,16 +5,19 @@
         <img :src="logo" class="header__logo" alt="">
       </router-link>
     </div>
-    <!-- <el-menu mode="horizontal" class="header__middle"
+    <el-menu mode="horizontal" class="header__middle"
       :default-active="activeIndex"
       @click="onClickMenuItem">
       <el-menu-item index="1" class="header__nav-item">
-        <router-link to="/stocks/">Котировки</router-link>
+        <router-link to="/stocks/">Stocks</router-link>
       </el-menu-item>
-      <el-menu-item index="2" class="header__nav-item">
-        <router-link to="/about/">О сервисе</router-link>
+      <el-menu-item index="2" class="header__nav-item" disabled>
+        <router-link to="/scriners/">Scriners</router-link>
       </el-menu-item>
-    </el-menu> -->
+      <el-menu-item index="3" class="header__nav-item" disabled>
+        <router-link to="/about/">About</router-link>
+      </el-menu-item>
+    </el-menu>
     <div class="header__right" v-if="!$auth.user?.loading">
       <span class="header__user-email">{{ $auth.user?.email }}</span>
       <template v-if="$auth.authenticated">
@@ -38,7 +41,7 @@
         </el-dropdown>
       </template>
       <template v-else>
-        <el-button size="medium" @click="login" round>Войти</el-button>
+        <el-button size="medium" disabled>Log in</el-button>
       </template>
     </div>
   </div>
@@ -71,9 +74,8 @@ export default {
       this.$store.commit('setToken', '');
     },
     onClickMenuItem(e) {
-      const target = e.path[0];
-      if (target.tagName === 'LI') {
-        const link = e.path[0].querySelector('a');
+      if (e?.target?.tagName === 'LI') {
+        const link = e.target.querySelector('a');
         if (link) link.click();
       }
     },
@@ -121,20 +123,34 @@ export default {
     font-size: 12px;
 
     @media(max-width: 575px) {
-      display: none;;
+      display: none;
     }
   }
   &__user-pic {
     cursor: pointer;
   }
 
-  .el-menu.el-menu--horizontal {
-    border: none;
+  &__middle {
+    border: none!important;
+    background: none;
+
+    @media(max-width: 575px) {
+      display: none;
+    }
   }
 
   &__nav-item {
     border: none!important;
-    padding: 0 8px;
+    padding: 0 16px;
+    background-color: transparent;
+
+    @media (max-width: 991px) {
+      padding: 0 12px;
+    }
+
+    &.is-disabled {
+      pointer-events: none;
+    }
   }
 
   .el-menu-item {

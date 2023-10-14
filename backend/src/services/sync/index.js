@@ -1,5 +1,6 @@
 require('dotenv').config();
 const gt = require('./providers/gt');
+const moex = require('./providers/moex');
 
 const db = require('../../db/connect');
 const config = require('../../db/config');
@@ -27,8 +28,11 @@ function update() {
 
   isPending = true;
 
-  gt.getStocks()
-    .then(save)
+  Promise.all([gt.getStocks(), moex.getStocks()])
+    .then(([gtData, moexData]) => save({
+      ...gtData,
+      MOEX: moexData,
+    }))
     .catch((error) => {
       logger.warn('Get stocks error:', error);
     })

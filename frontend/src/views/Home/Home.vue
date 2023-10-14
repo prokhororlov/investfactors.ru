@@ -3,16 +3,17 @@
     <div class="home-screen-welcome">
       <div class="home-screen-welcome__content">
         <div class="home-screen-welcome__header">
-          Помогаем инвесторам
-          <span>узнать свои активы ближе</span>
+          Invest wisely
+          <span>using professional researches</span>
         </div>
         <div class="home-screen-welcome__desc">
-          Изучайте и добавляйте существенные факты<br>
-          об интересных вам компаниях
+          Explore&nbsp;&amp;&nbsp;verify factors to&nbsp;buy or&nbsp;sell,
+          take part in&nbsp;discussions, follow best rated authors,
+          share your&nbsp;own&nbsp;expertise
         </div>
         <div class="home-screen-welcome__button">
           <router-link to="/stocks/">
-            <el-button type="success" round>Перейти к котировкам</el-button>
+            <el-button type="success">Go to stocks</el-button>
           </router-link>
         </div>
       </div>
