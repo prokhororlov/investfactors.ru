@@ -7,7 +7,6 @@
   "scripts": {
     "build": "yarn --cwd frontend build",
     "start": "yarn --cwd backend start",
-    "storybook": "yarn --cwd frontend storybook",
     "dev": "sh _ci/start_dev.sh",
     "postinstall": "husky install"
   },
