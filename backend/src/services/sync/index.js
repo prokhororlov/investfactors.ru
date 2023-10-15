@@ -12,6 +12,7 @@ const logger = require('../../../utils/logger');
 const { isValidTime } = require('./utils');
 
 let isPending = false;
+let initialised = false;
 
 function save(instruments) {
   const count = Object.values(instruments).map(Object.keys).flat().length;
@@ -22,11 +23,12 @@ function save(instruments) {
 
 function update() {
   const isTradingTime = isValidTime('06:59:59', '01:30:00');
-  if (!isTradingTime || isPending) return;
+  if ((!isTradingTime && initialised) || isPending) return;
 
   logger.info('Updating stocks...');
 
   isPending = true;
+  initialised = true;
 
   Promise.all([gt.getStocks(), moex.getStocks()])
     .then(([gtData, moexData]) => save({
