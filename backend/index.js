@@ -25,7 +25,7 @@ app.post('/api/stocks/', db.stocks.getList);
 app.post('/api/details/', db.stocks.getDetails);
 
 app.listen(PORT, () => {
-  logger.info('Server started at: http://localhost');
+  logger.info('Server started at: http://localhost' + (PORT ? `:${PORT}` : ''));
 });
 
 syncStocks.init();
