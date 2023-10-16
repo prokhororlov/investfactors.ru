@@ -134,23 +134,28 @@
   display: grid;
   font-family: sans-serif;
   text-align: initial;
-  border: 1px solid lightgray;
-  border-radius: 16px;
+  border: 1px solid #e0e3eb;
+  border-radius: 3px;
 
   &__content {
     max-height: 500px;
 	  overflow-y: auto;
     padding: 12px;
-    &::-webkit-scrollbar             { width: 4px; height: 4px; }
-    &::-webkit-scrollbar-track       { background: rgba(32, 178, 170, 0.3); }
-    &::-webkit-scrollbar-thumb       { background: rgba(32, 178, 170, 0.9); }
-    &::-webkit-scrollbar-thumb:hover { background: rgba(32, 178, 170, 0.8); }
+    
+    &::-webkit-scrollbar             { width: 5px; height: 5px; }
+    &::-webkit-scrollbar-track       { background: transparent; }
+    &::-webkit-scrollbar-thumb       {
+      background: #9598a1;
+      border-radius: 3px;
+      border: 1px solid #f0f3fa;
+    }
+    &::-webkit-scrollbar-thumb:hover { background:  #9598a1; }
   }
 
   &__instruments {
     background: white;
     padding: 12px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #e0e3eb;
     display: grid;
     grid-gap: 6px;
     border-radius: 16px 16px 0 0;
@@ -169,8 +174,8 @@
 
   &__characters-count {
     padding: 12px;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-top: 1px solid #e0e3eb;
+    border-bottom: 1px solid #e0e3eb;
   }
   .el-button {
     max-width: 30px;
