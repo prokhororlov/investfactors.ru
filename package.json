@@ -9,7 +9,7 @@
     "start": "yarn --cwd backend start",
     "dev": "sh _ci/start_dev.sh",
     "postinstall": "husky install",
-    "deploy": "sh _ci/deploy.sh"
+    "deploy": "node_v=$(node -v) && nvm use 14 && sh _ci/deploy.sh && nvm use $node_v"
   },
   "workspaces": [
     "frontend",
