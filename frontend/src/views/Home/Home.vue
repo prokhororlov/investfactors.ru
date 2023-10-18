@@ -35,7 +35,7 @@ export default {
   .home-screen{
 
     &-welcome {
-      background: #3c5ecd url('./assets/img/bg.png');
+      background: #3c5ecd url('./assets/img/bg.jpg');
       background-size: cover;
       background-position: center;
       height: calc(100vh - 60px);

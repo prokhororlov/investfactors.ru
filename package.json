@@ -8,7 +8,8 @@
     "build": "yarn --cwd frontend build",
     "start": "yarn --cwd backend start",
     "dev": "sh _ci/start_dev.sh",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "deploy": "sh _ci/deploy.sh"
   },
   "workspaces": [
     "frontend",
