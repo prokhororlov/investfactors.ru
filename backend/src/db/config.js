@@ -1,6 +1,7 @@
 module.exports = {
   refs: {
     stocks: process.env.NODE_ENV === 'development' ? 'stocks-dev' : 'stocks',
+    users: 'users',
     details: 'company-detail',
   },
   options: {

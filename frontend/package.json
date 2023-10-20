@@ -30,7 +30,6 @@
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.54",
     "vue": "^3.0.0",
-    "vue-auth0-plugin": "^2.4.3",
     "vue-router": "^4.0.0-0",
     "vue-yandex-metrika": "^1.8.3",
     "vuex": "^4.0.0-0"
