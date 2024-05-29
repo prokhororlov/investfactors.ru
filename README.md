@@ -1,6 +1,6 @@
 # Invest Factors
 
-Link: https://invest-factors.herokuapp.com
+Link: https://investfactors.ru
 
 ### Setup & Run
 ```bash
