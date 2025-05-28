@@ -1,30 +1,39 @@
-# invest-factors
+Here are the separate README files for frontend and backend that complement the main README without unnecessary repetition:
 
-## Project setup
+## Frontend README
+
+The frontend of Invest Factors is built with Vue.js 3 and provides the user interface for stock analysis and research.
+
+### Key Features:
+- Stock list with filtering and sorting
+- Detailed stock view with charts and metrics
+- Rich text editor for user-generated content
+- Responsive design
+- Integration with TradingView widgets
+
+### Installation:
+
 ```
+cd frontend
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Running in Development:
+
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Building for Production:
+
 ```
 yarn build
 ```
 
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# invest-factors
+### Tech Stack:
+- Vue.js 3
+- Vuex for state management
+- Vue Router
+- Element Plus UI library
+- Tiptap rich text editor
+- SCSS for styling
