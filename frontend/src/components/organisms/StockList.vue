@@ -23,6 +23,7 @@
                 class="stocks-list__item-logo"
                 :style="`
                   background: url(https://yastatic.net/s3/fintech-icons/1/i/${normalTicker(scope.row.ticker)}.svg), #F3F3F3;
+                  background-size: cover;
                 `" />
               <div class="stocks-list__item-ticker" >{{ scope.row.ticker }}</div>
             </router-link>
