@@ -3,16 +3,16 @@
 </template>
 
 <script>
-import unionProps from '../helpers/unionProps'
+import unionProps from '../helpers/unionProps';
 
 const formatSize = (value, preset) => {
-  const intVal = parseInt(value, 10)
-  const isMeasured = ['px', '%'].includes(`${value}`.replace(intVal, ''))
+  const intVal = parseInt(value, 10);
+  const isMeasured = ['px', '%'].includes(`${value}`.replace(intVal, ''));
 
-  if (intVal > 0 && isMeasured) return value
-  if (intVal > 0) return `${intVal}px`
-  return preset
-}
+  if (intVal > 0 && isMeasured) return value;
+  if (intVal > 0) return `${intVal}px`;
+  return preset;
+};
 
 export default {
   name: 'TradingViewShell',
@@ -27,13 +27,13 @@ export default {
     src() {
       const params = Object.keys(this.params || {}).length
         ? `?${new URLSearchParams(this.params)}`
-        : ''
+        : '';
 
       const options = Object.keys(this.options || {}).length
         ? `#${encodeURI(JSON.stringify(this.options))}`
-        : ''
+        : '';
 
-      return `${this.frameUrl}${params}${options}`
+      return `${this.frameUrl}${params}${options}`;
     },
     style() {
       return {
@@ -44,8 +44,8 @@ export default {
         border: '0',
         boxShadow: '0 0 10px 10px #ededed',
         borderRadius: '3px',
-      }
+      };
     },
   },
-}
+};
 </script>

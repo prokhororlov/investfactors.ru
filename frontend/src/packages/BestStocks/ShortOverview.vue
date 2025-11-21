@@ -25,9 +25,9 @@ export default {
   },
   computed: {
     tickerFormated() {
-      const [market, name] = this.ticker.split(':')
-      return (market === 'MOEX' ? 'ru:' : '') + name.toLowerCase()
+      const [market, name] = this.ticker.split(':');
+      return (market === 'MOEX' ? 'ru:' : '') + name.toLowerCase();
     },
   },
-}
+};
 </script>

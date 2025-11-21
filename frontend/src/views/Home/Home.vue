@@ -2,6 +2,11 @@
   <div class="home">
     <div class="home-screen-welcome">
       <div class="home-screen-welcome__hero">
+        <div class="home-screen-welcome__logo">
+          <router-link to="/">
+            <img :src="logoWhite" class="home-screen-welcome__logo-img" alt="Invest Factors" />
+          </router-link>
+        </div>
         <div class="home-screen-welcome__content">
           <div class="home-screen-welcome__header">
             Make smarter investment decisions
@@ -45,14 +50,20 @@
 </template>
 
 <script>
-import { FeatureCard } from '../../components/molecules'
+import { FeatureCard } from '../../components/molecules';
+import logoWhite from '../../assets/img/logo-white.svg';
 
 export default {
   name: 'Home',
   components: {
     FeatureCard,
   },
-}
+  data() {
+    return {
+      logoWhite,
+    };
+  },
+};
 </script>
 
 <style lang="scss">
@@ -93,13 +104,31 @@ export default {
       &__hero {
         flex: 1;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
         padding: 80px 120px 40px;
         position: relative;
         z-index: 1;
 
         @media (max-width: 767px) {
           padding: 60px 32px 32px;
+        }
+      }
+
+      &__logo {
+        margin-bottom: 40px;
+
+        @media (max-width: 767px) {
+          margin-bottom: 32px;
+        }
+      }
+
+      &__logo-img {
+        height: 40px;
+        width: auto;
+
+        @media (max-width: 767px) {
+          height: 32px;
         }
       }
 
@@ -167,21 +196,22 @@ export default {
     padding: 40px 120px 60px;
     position: relative;
     z-index: 1;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 40px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40px);
 
     @media (max-width: 991px) {
-      padding: 32px 40px 48px;
+      padding: 80px 120px 40px;
     }
 
     @media (max-width: 767px) {
-      padding: 24px 24px 40px;
+      padding: 60px 32px 32px;
     }
 
     &__container {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+      width: 100%;
 
       @media (max-width: 991px) {
         grid-template-columns: 1fr;

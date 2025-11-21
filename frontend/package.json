@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "pre-serve": "vue-cli-service lint --fix",
     "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint:fix": "vue-cli-service lint --fix"
   },
   "dependencies": {
     "@tiptap/extension-character-count": "^2.0.0-beta.13",
