@@ -4,18 +4,18 @@
       <a href="/"><img :src="logo" class="stock__logo" alt="Invest Factors" /></a>
     </div>
     <ShortOverview :ticker="ticker" class="stock__chart" :height="367" />
-    <CompanyProfile :ticker="ticker" class="stock__profile" :height="367"/>
-    <Metrics :ticker="ticker" class="stock__metrics" :height="386"/>
+    <CompanyProfile :ticker="ticker" class="stock__profile" :height="367" />
+    <Metrics :ticker="ticker" class="stock__metrics" :height="386" />
     <!-- <Editor :content="content" class="stock__editor" :height="500" :editable="true"/> -->
   </div>
 </template>
 
 <script>
-import { Metrics } from '../../packages/TradingView';
-import ShortOverview from '../../packages/BestStocks/ShortOverview.vue';
-import CompanyProfile from './src/CompanyProfile.vue';
+import { Metrics } from '../../packages/TradingView'
+import ShortOverview from '../../packages/BestStocks/ShortOverview.vue'
+import CompanyProfile from './src/CompanyProfile.vue'
 // import { Editor } from '../../components/molecules';
-import logo from '../../assets/img/logo.svg';
+import logo from '../../assets/img/logo.svg'
 
 export default {
   name: 'Stock',
@@ -61,9 +61,9 @@ export default {
     — Mom
   </blockquote>
 `,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -73,10 +73,10 @@ export default {
   box-shadow: 0 0 10px 10px #ededed;
   border-radius: 12px;
   grid-template-areas:
-    "header header"
-    "chart profile"
-    "metrics metrics"
-    "editor editor";
+    'header header'
+    'chart profile'
+    'metrics metrics'
+    'editor editor';
   grid-template-columns: 50%;
 
   @media (max-width: 550px) {
@@ -99,18 +99,26 @@ export default {
     }
   }
 
-  &__chart { grid-area: chart; }
-  &__profile { grid-area: profile; }
-  &__metrics { grid-area: metrics; }
-  &__editor { grid-area: editor; }
+  &__chart {
+    grid-area: chart;
+  }
+  &__profile {
+    grid-area: profile;
+  }
+  &__metrics {
+    grid-area: metrics;
+  }
+  &__editor {
+    grid-area: editor;
+  }
 
   @media (max-width: calc(768px + 35px)) {
     grid-template-areas:
-      "header"
-      "chart"
-      "profile"
-      "metrics"
-      "editor";
+      'header'
+      'chart'
+      'profile'
+      'metrics'
+      'editor';
     grid-template-columns: 100%;
   }
 

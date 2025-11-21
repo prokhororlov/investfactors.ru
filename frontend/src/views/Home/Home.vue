@@ -8,15 +8,12 @@
             <span>with data-driven insights</span>
           </div>
           <div class="home-screen-welcome__desc">
-            Discover verified investment factors, analyze market trends,
-            engage with expert traders, and share your own research
-            in a professional community
+            Discover verified investment factors, analyze market trends, engage with expert traders,
+            and share your own research in a professional community
           </div>
           <div class="home-screen-welcome__button">
             <router-link to="/stocks/">
-              <el-button type="primary" size="large" class="cta-button">
-                Explore Stocks
-              </el-button>
+              <el-button type="primary" size="large" class="cta-button"> Explore Stocks </el-button>
             </router-link>
           </div>
         </div>
@@ -48,24 +45,23 @@
 </template>
 
 <script>
-import { FeatureCard } from '../../components/molecules';
+import { FeatureCard } from '../../components/molecules'
 
 export default {
   name: 'Home',
   components: {
     FeatureCard,
   },
-};
+}
 </script>
 
 <style lang="scss">
 .home {
-  &>* {
+  & > * {
     box-sizing: border-box;
   }
 
   .home-screen {
-
     &-welcome {
       background: var(--color-primary) url('./assets/img/bg.jpg');
       background-size: cover;
@@ -102,7 +98,7 @@ export default {
         position: relative;
         z-index: 1;
 
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           padding: 60px 32px 32px;
         }
       }
@@ -119,7 +115,7 @@ export default {
         line-height: 1.2;
         letter-spacing: -0.5px;
 
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           font-size: 36px;
         }
 
@@ -130,7 +126,7 @@ export default {
           margin-top: 8px;
           opacity: 0.95;
 
-          @media(max-width: 767px) {
+          @media (max-width: 767px) {
             font-size: 24px;
           }
         }
@@ -143,7 +139,7 @@ export default {
         opacity: 0.9;
         max-width: 500px;
 
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           font-size: 16px;
         }
       }
@@ -162,7 +158,6 @@ export default {
           }
         }
       }
-
     }
   }
 
@@ -173,11 +168,11 @@ export default {
     position: relative;
     z-index: 1;
 
-    @media(max-width: 991px) {
+    @media (max-width: 991px) {
       padding: 32px 40px 48px;
     }
 
-    @media(max-width: 767px) {
+    @media (max-width: 767px) {
       padding: 24px 24px 40px;
     }
 
@@ -188,12 +183,11 @@ export default {
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
 
-      @media(max-width: 991px) {
+      @media (max-width: 991px) {
         grid-template-columns: 1fr;
         gap: 20px;
       }
     }
   }
-
 }
 </style>

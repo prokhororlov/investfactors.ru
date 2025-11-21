@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Icon from '../Icon/Icon.vue';
+import Icon from '../Icon/Icon.vue'
 
 export default {
   name: 'ThemeToggle',
@@ -18,16 +18,16 @@ export default {
   },
   computed: {
     theme() {
-      return this.$store.state.theme;
+      return this.$store.state.theme
     },
   },
   methods: {
     toggleTheme() {
-      const newTheme = this.theme === 'light' ? 'dark' : 'light';
-      this.$store.commit('setTheme', newTheme);
+      const newTheme = this.theme === 'light' ? 'dark' : 'light'
+      this.$store.commit('setTheme', newTheme)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

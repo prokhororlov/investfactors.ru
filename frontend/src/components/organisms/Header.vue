@@ -2,12 +2,15 @@
   <div class="header">
     <div class="header__left">
       <router-link to="/">
-        <img :src="logo" class="header__logo" alt="">
+        <img :src="logo" class="header__logo" alt="" />
       </router-link>
     </div>
-    <el-menu mode="horizontal" class="header__middle"
+    <el-menu
+      mode="horizontal"
+      class="header__middle"
       :default-active="activeIndex"
-      @click="onClickMenuItem">
+      @click="onClickMenuItem"
+    >
       <el-menu-item index="1" class="header__nav-item">
         <router-link to="/stocks/">Stocks</router-link>
       </el-menu-item>
@@ -31,10 +34,10 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item @click="$router.replace('/profile/')" class="header__dropdown-item">
-                <Icon name="person-fill" :size="16"/> Профиль
+                <Icon name="person-fill" :size="16" /> Профиль
               </el-dropdown-item>
               <el-dropdown-item @click="logout" class="header__dropdown-item">
-                <Icon name="power" :size="16"/> Выйти
+                <Icon name="power" :size="16" /> Выйти
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -48,8 +51,8 @@
 </template>
 
 <script>
-import logo from '../../assets/img/logo.svg';
-import { Icon } from '../atoms';
+import logo from '../../assets/img/logo.svg'
+import { Icon } from '../atoms'
 
 export default {
   components: {
@@ -60,35 +63,35 @@ export default {
   }),
   methods: {
     async login() {
-      await this.$auth.loginWithPopup();
-      const token = (await this.$auth.getTokenSilently());
+      await this.$auth.loginWithPopup()
+      const token = await this.$auth.getTokenSilently()
 
-      this.$store.commit('setToken', token);
+      this.$store.commit('setToken', token)
     },
     async logout() {
       this.$auth.logout({
         returnTo: window.location.origin,
-      });
+      })
 
-      await this.$auth.handleRedirectCallback();
-      this.$store.commit('setToken', '');
+      await this.$auth.handleRedirectCallback()
+      this.$store.commit('setToken', '')
     },
     onClickMenuItem(e) {
       if (e?.target?.tagName === 'LI') {
-        const link = e.target.querySelector('a');
-        if (link) link.click();
+        const link = e.target.querySelector('a')
+        if (link) link.click()
       }
     },
   },
   computed: {
     activeIndex() {
-      return ({
+      return {
         Home: '0',
         Stocks: '1',
-      })[this.$route.name];
+      }[this.$route.name]
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -125,7 +128,7 @@ export default {
     font-size: 12px;
     color: var(--color-text-secondary);
 
-    @media(max-width: 575px) {
+    @media (max-width: 575px) {
       display: none;
     }
   }
@@ -134,16 +137,16 @@ export default {
   }
 
   &__middle {
-    border: none!important;
+    border: none !important;
     background: none;
 
-    @media(max-width: 575px) {
+    @media (max-width: 575px) {
       display: none;
     }
   }
 
   &__nav-item {
-    border: none!important;
+    border: none !important;
     padding: 0 16px;
     background-color: transparent;
 
@@ -160,7 +163,7 @@ export default {
     position: relative;
   }
   a.router-link-exact-active {
-    color: lightseagreen!important;
+    color: lightseagreen !important;
   }
   &__dropdown-item {
     display: grid;

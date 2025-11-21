@@ -34,7 +34,7 @@
   --transition-slow: 0.5s ease;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-bg-primary: #1a1d29;
   --color-bg-secondary: #232633;
   --color-bg-tertiary: #2d3142;
@@ -63,7 +63,7 @@
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-base);
-  
+
   &:hover {
     box-shadow: var(--shadow-md);
     border-color: var(--color-border);
@@ -79,15 +79,14 @@
   font-weight: 500;
   transition: all var(--transition-fast);
   cursor: pointer;
-  
+
   &:hover {
     background: var(--color-accent-hover);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
 }
-

@@ -3,20 +3,20 @@
     <Header />
     <div class="app__view">
       <Transition name="fade">
-        <router-view/>
+        <router-view />
       </Transition>
     </div>
   </div>
 </template>
 
 <script>
-import Header from './components/organisms/Header.vue';
+import Header from './components/organisms/Header.vue'
 
 export default {
   components: {
     Header,
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -67,5 +67,4 @@ body {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
