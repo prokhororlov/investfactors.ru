@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { Icon } from '../../atoms';
+import { Icon } from '../../atoms'
 
 export default {
   name: 'FeatureCard',
@@ -30,7 +30,7 @@ export default {
       required: true,
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

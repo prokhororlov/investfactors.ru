@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import { FeatureCard } from '../../components/molecules';
-import logoWhite from '../../assets/img/logo-white.svg';
+import { FeatureCard } from '../../components/molecules'
+import logoWhite from '../../assets/img/logo-white.svg'
 
 export default {
   name: 'Home',
@@ -61,9 +61,9 @@ export default {
   data() {
     return {
       logoWhite,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss">

@@ -31,32 +31,32 @@ export default {
         industry: '',
         desc: [''],
       },
-    };
+    }
   },
   methods: {
     getDetails() {
-      if (this.isLoading) return;
-      const [market, ticker] = this.ticker.split(':');
+      if (this.isLoading) return
+      const [market, ticker] = this.ticker.split(':')
 
-      this.isLoading = true;
+      this.isLoading = true
       this.$store.state.api
         .getCompanyDetails({ market, ticker })
-        .then((response) => {
-          this.details.sector = response.data.sector || '-';
-          this.details.industry = response.data.industry || '-';
+        .then(response => {
+          this.details.sector = response.data.sector || '-'
+          this.details.industry = response.data.industry || '-'
           this.details.desc = response.data.desc.replace(/\n+/g, '\n').split('\n') || [
             'Пока нет данных о компании',
-          ];
+          ]
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
   },
   mounted() {
-    this.getDetails();
+    this.getDetails()
   },
-};
+}
 </script>
 
 <style lang="scss">

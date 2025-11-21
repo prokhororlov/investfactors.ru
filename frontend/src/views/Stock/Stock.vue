@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import { Metrics } from '../../packages/TradingView';
-import ShortOverview from '../../packages/BestStocks/ShortOverview.vue';
-import CompanyProfile from './src/CompanyProfile.vue';
+import { Metrics } from '../../packages/TradingView'
+import ShortOverview from '../../packages/BestStocks/ShortOverview.vue'
+import CompanyProfile from './src/CompanyProfile.vue'
 // import { Editor } from '../../components/molecules';
-import logo from '../../assets/img/logo.svg';
+import logo from '../../assets/img/logo.svg'
 
 export default {
   name: 'Stock',
@@ -61,9 +61,9 @@ export default {
     — Mom
   </blockquote>
 `,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss">
