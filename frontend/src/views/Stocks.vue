@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import StockList from '../components/organisms/StockList.vue'
-import logo from '../assets/img/logo.svg'
+import StockList from '../components/organisms/StockList.vue';
+import logo from '../assets/img/logo.svg';
 
 export default {
   name: 'Stocks',
@@ -35,11 +35,11 @@ export default {
       stocks: [],
       interval: null,
       market: this.$route.query.market || 'MOEX',
-    }
+    };
   },
   methods: {
     setMarket(market) {
-      this.market = market
+      this.market = market;
       this.$router.push({
         path: '/stocks/',
         query: {
@@ -47,28 +47,28 @@ export default {
           market,
           page: undefined,
         },
-      })
+      });
     },
     getStocks() {
-      if (this.isPending) return
-      this.isPending = true
+      if (this.isPending) return;
+      this.isPending = true;
       this.$store.state.api
         .getStocks({ query: this.query })
-        .then(response => {
-          this.stocks = response.data
+        .then((response) => {
+          this.stocks = response.data;
         })
         .finally(() => {
-          this.isLoading = false
-          this.isPending = false
-        })
+          this.isLoading = false;
+          this.isPending = false;
+        });
     },
   },
   mounted() {
-    this.getStocks()
-    this.interval = setInterval(this.getStocks, 1000 * 10)
+    this.getStocks();
+    this.interval = setInterval(this.getStocks, 1000 * 10);
   },
   beforeUnmount() {
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   },
   computed: {
     query() {
@@ -78,16 +78,16 @@ export default {
         sort_type: this.$route.query.sort_type,
         sort_stage: this.$route.query.sort_stage,
         market: this.market,
-      }
+      };
     },
   },
   watch: {
     query() {
-      this.isLoading = true
-      this.getStocks()
+      this.isLoading = true;
+      this.getStocks();
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
