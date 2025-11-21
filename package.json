@@ -9,7 +9,14 @@
     "start": "yarn --cwd backend start",
     "dev": "sh _ci/start_dev.sh",
     "postinstall": "husky install",
-    "deploy": "sh _ci/deploy.sh"
+    "deploy": "sh _ci/deploy.sh",
+    "lint": "yarn --cwd frontend lint && yarn --cwd backend lint",
+    "lint:fix": "yarn --cwd frontend lint:fix && yarn --cwd backend lint:fix",
+    "format": "prettier --write \"{backend,frontend}/**/*.{js,vue,json,css,scss,md}\"",
+    "format:check": "prettier --check \"{backend,frontend}/**/*.{js,vue,json,css,scss,md}\"",
+    "test": "yarn --cwd frontend test && yarn --cwd backend test",
+    "clean": "rm -rf node_modules frontend/node_modules backend/node_modules",
+    "reinstall": "yarn clean && yarn install"
   },
   "workspaces": [
     "frontend",

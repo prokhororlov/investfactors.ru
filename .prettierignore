@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+bower_components/
+
+# Production builds
+dist/
+build/
+out/
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+
+# Cache
+.cache/
+.eslintcache
+
+# Generated files
+*.min.js
+*.min.css
+
+# Markdown files (preserve formatting)
+*.md
+
+# Configuration files that should maintain exact formatting
+.env
+.env.*
+
+# Lock files
+*.lock

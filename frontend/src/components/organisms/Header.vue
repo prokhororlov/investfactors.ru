@@ -98,9 +98,11 @@ export default {
   align-items: center;
   border: none;
   padding: 0 16px;
-  box-shadow: 0 0 16px #0003;
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-elevated);
   position: relative;
   height: 60px;
+  transition: background-color var(--transition-base), box-shadow var(--transition-base);
 
   &__logo {
     width: 100px;
@@ -121,6 +123,7 @@ export default {
 
   &__user-email {
     font-size: 12px;
+    color: var(--color-text-secondary);
 
     @media(max-width: 575px) {
       display: none;

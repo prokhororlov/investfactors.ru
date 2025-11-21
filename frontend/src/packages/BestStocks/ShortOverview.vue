@@ -10,6 +10,7 @@
       height: `${height - 2 || 350}px`,
       border: '1px solid #e0e3eb',
       borderRadius: '3px',
+      boxShadow: '0 0 10px 10px #ededed',
     }"
     :src="`https://beststocks.ru/widget/${tickerFormated}?id=${tickerFormated}-frame-6219160886`"
   ></iframe>

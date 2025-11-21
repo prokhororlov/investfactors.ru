@@ -42,6 +42,8 @@ export default {
         margin: '0!important',
         padding: '0!important',
         border: '0',
+        boxShadow: '0 0 10px 10px #ededed',
+        borderRadius: '3px',
       };
     },
   },

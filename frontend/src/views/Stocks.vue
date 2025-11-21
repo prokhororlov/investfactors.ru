@@ -1,14 +1,17 @@
 <template>
   <div class="stocks">
-    <div style="display: flex">
-      <el-button
-        v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
-        :key="item"
-        size="mini"
-        :disabled="(this.market) === item || isLoading"
-        @click="setMarket(item)">
-        {{item}}
-      </el-button>
+    <div class="stocks__header">
+      <a href="/"><img :src="logo" class="stocks__logo" alt="Invest Factors" /></a>
+      <div class="stocks__markets">
+        <el-button
+          v-for="(item) of ['MOEX', 'NASDAQ', 'NYSE']"
+          :key="item"
+          size="mini"
+          :disabled="(this.market) === item || isLoading"
+          @click="setMarket(item)">
+          {{item}}
+        </el-button>
+      </div>
     </div>
     <StockList :stocks="stocks" :isLoading="isLoading" />
   </div>
@@ -16,6 +19,7 @@
 
 <script>
 import StockList from '../components/organisms/StockList.vue';
+import logo from '../assets/img/logo.svg';
 
 export default {
   name: 'Stocks',
@@ -24,6 +28,7 @@ export default {
   },
   data() {
     return {
+      logo,
       isLoading: true,
       isPending: false,
       stocks: [],
@@ -85,7 +90,41 @@ export default {
 
 <style lang="scss">
 .stocks {
-  padding: 16px;
+  padding: 16px 24px;
   box-sizing: border-box;
+  background-color: #f1f1f1;
+  min-height: 100vh;
+  transition: background-color var(--transition-base);
+
+  @media (max-width: 550px) {
+    padding: 16px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 12px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  &__logo {
+    height: 40px;
+    width: auto;
+
+    @media (max-width: 767px) {
+      height: 32px;
+    }
+  }
+
+  &__markets {
+    display: flex;
+    gap: 8px;
+  }
 }
 </style>

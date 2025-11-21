@@ -1,9 +1,11 @@
 <template>
-  <Header />
-  <div class="app__view">
-    <Transition name="fade">
-      <router-view/>
-    </Transition>
+  <div class="app-container">
+    <Header />
+    <div class="app__view">
+      <Transition name="fade">
+        <router-view/>
+      </Transition>
+    </div>
   </div>
 </template>
 
@@ -18,18 +20,42 @@ export default {
 </script>
 
 <style lang="scss">
+@import './assets/styles/themes.scss';
+
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
-::-webkit-scrollbar             { width: 4px; height: 4px; }
-::-webkit-scrollbar-track       { background: rgba(230, 230, 230, 1); }
-::-webkit-scrollbar-thumb       { background: rgba(0, 201, 255, 0.8); }
-::-webkit-scrollbar-thumb:hover { background: rgba(0, 201, 255, 1); }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  opacity: 0.8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+  opacity: 1;
+}
+
+.app-container {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-family);
   text-align: center;
-  color: #2c3e50;
+  color: var(--color-text-primary);
 }
 
 .fade-enter-active,

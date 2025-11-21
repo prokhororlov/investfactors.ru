@@ -22,8 +22,13 @@
               <div
                 class="stocks-list__item-logo"
                 :style="`
-                  background: url(https://yastatic.net/s3/fintech-icons/1/i/${normalTicker(scope.row.ticker)}.svg), #F3F3F3;
-                  background-size: cover;
+                  background:
+                    url(https://yastatic.net/s3/fintech-icons/1/i/${normalTicker(scope.row.ticker)}.svg),
+                    url(https://pic.onlinewebfonts.com/thumbnails/icons_311343.svg),
+                    #F3F3F3;
+                  background-size: cover, 70%;
+                  background-repeat: no-repeat;
+                  background-position: center;
                 `" />
               <div class="stocks-list__item-ticker" >{{ scope.row.ticker }}</div>
             </router-link>
@@ -39,6 +44,11 @@
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CAP')">
             Market Cap.
+            <Icon
+              v-if="sortType === 'CAP'"
+              :name="sortStage === 'UP' ? 'arrow-up-short' : 'arrow-down-short'"
+              :size="16"
+            />
           </div>
         </template>
         <template #default="scope">
@@ -53,6 +63,11 @@
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('PRICE')">
             Price
+            <Icon
+              v-if="sortType === 'PRICE'"
+              :name="sortStage === 'UP' ? 'arrow-up-short' : 'arrow-down-short'"
+              :size="16"
+            />
           </div>
         </template>
         <template #default="scope">
@@ -73,6 +88,11 @@
             class="stocks-list__item-filter"
             :class="getSortActiveClassConstructor('CHANGE')">
             Change
+            <Icon
+              v-if="sortType === 'CHANGE'"
+              :name="sortStage === 'UP' ? 'arrow-up-short' : 'arrow-down-short'"
+              :size="16"
+            />
           </div>
         </template>
         <template #default="scope">
@@ -80,10 +100,18 @@
           :class="{
             'stocks-list__item-change_increased': scope.row.change > 0 && scope.row.price,
             'stocks-list__item-change_decreased': scope.row.change < 0 && scope.row.price,
+            'stocks-list__item-change_neutral': (!scope.row.change || scope.row.change === 0)
+              && scope.row.price,
             'stocks-list__item-change_trading': scope.row.market === 'MOEX'
               ? scope.row.is_trading
               : stocks.meta.is_trading,
           }">
+            <Icon
+              v-if="scope.row.change && scope.row.price && scope.row.change !== 0"
+              :name="scope.row.change > 0 ? 'arrow-up' : 'arrow-down'"
+              :size="14"
+              class="stocks-list__item-change-icon"
+            />
             {{
               scope.row.change && scope.row.price
                 ? `${(scope.row.change > 0 ? '+' : '') + scope.row.change}%`
@@ -152,6 +180,7 @@
 <script>
 
 import PriceRange from '../atoms/PriceRange/PriceRange.vue';
+import { Icon } from '../atoms';
 
 const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP']
   .reduce((t, i) => ({ ...t, [i]: i }), {});
@@ -163,6 +192,7 @@ export default {
   name: 'StockList',
   components: {
     PriceRange,
+    Icon,
   },
   props: {
     stocks: {
@@ -268,8 +298,13 @@ export default {
     grid-gap: 16px;
 
     a {
-      color: lightseagreen;
+      color: var(--color-accent);
       text-decoration: none;
+      transition: color var(--transition-fast);
+
+      &:hover {
+        color: var(--color-accent-hover);
+      }
     }
 
     &__search {
@@ -280,9 +315,26 @@ export default {
     &__table {
       min-height: 450px;
       margin-top: 16px;
+      background-color: var(--color-bg-elevated);
+      box-shadow: 0 0 10px 10px #ededed;
+      border-radius: 8px;
 
       th {
-        font-size: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        background-color: var(--color-table-header-bg) !important;
+        color: var(--color-table-header-text) !important;
+        border-color: var(--color-table-border) !important;
+        transition: background-color var(--transition-base);
+      }
+
+      td {
+        border-color: var(--color-table-border) !important;
+        background-color: var(--color-bg-elevated) !important;
+      }
+
+      tr:hover td {
+        background-color: var(--color-table-row-hover) !important;
       }
 
       .cell {
@@ -317,10 +369,11 @@ export default {
       }
 
       &-logo {
-        border: 1px solid #E8E8E8;
+        border: 1px solid var(--color-border-secondary);
         width: 25px;
         height: 25px;
         border-radius: 25px;
+        transition: border-color var(--transition-fast);
       }
 
       @media (max-width: 991px) {
@@ -331,29 +384,64 @@ export default {
 
       &-filter {
         cursor: pointer;
-        transition: 0.3s;
-        &:hover, &_active {
-          color: lightseagreen;
+        transition: all var(--transition-fast);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: var(--radius-sm);
+        user-select: none;
+
+        &:hover {
+          color: var(--color-accent);
+          background-color: var(--color-bg-hover);
         }
 
-        &_up::after{
-          content: '↑';
-        }
-        &_down::after{
-          content: '↓';
+        &_active {
+          color: var(--color-accent);
+          font-weight: 600;
         }
       }
 
       &-change {
         opacity: 0.5;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-fast);
+
         &_trading {
           opacity: 1;
         }
         &_increased {
-          color: #068340;
+          color: var(--color-success);
+          background-color: var(--color-success-bg);
+          opacity: 1;
+
+          .stocks-list__item-change-icon {
+            color: var(--color-success);
+          }
         }
         &_decreased {
-          color: #e8082b;
+          color: var(--color-danger);
+          background-color: var(--color-danger-bg);
+          opacity: 1;
+
+          .stocks-list__item-change-icon {
+            color: var(--color-danger);
+          }
+        }
+        &_neutral {
+          color: var(--color-text-tertiary);
+          background-color: var(--color-bg-secondary);
+          opacity: 1;
+        }
+
+        &-icon {
+          flex-shrink: 0;
         }
       }
     }

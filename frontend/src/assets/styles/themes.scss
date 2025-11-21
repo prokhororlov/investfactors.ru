@@ -1,0 +1,132 @@
+// Theme Variables for Invest Factors
+// Inspired by TradingView design system
+
+:root {
+  // Light Theme (Default)
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-elevated: #ffffff;
+  --color-bg-hover: #f5f7f9;
+  --color-bg-active: #e8ebed;
+
+  // Text colors
+  --color-text-primary: #2c3e50;
+  --color-text-secondary: #6c757d;
+  --color-text-tertiary: #909399;
+  --color-text-inverse: #ffffff;
+
+  // Brand colors
+  --color-primary: #3c5ecd;
+  --color-primary-hover: #2d4ab3;
+  --color-primary-active: #1e3699;
+  --color-accent: #00c9ff;
+  --color-accent-hover: #00b3e6;
+
+  // Semantic colors
+  --color-success: #068340;
+  --color-success-bg: #e8f5e9;
+  --color-success-hover: #04632f;
+  --color-danger: #e8082b;
+  --color-danger-bg: #ffebee;
+  --color-danger-hover: #c20722;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fff3cd;
+  --color-info: #0ea5e9;
+  --color-info-bg: #e0f2fe;
+
+  // Border colors
+  --color-border-primary: #e0e3eb;
+  --color-border-secondary: #e8e8e8;
+  --color-border-tertiary: #f0f0f0;
+
+  // Table colors
+  --color-table-header-bg: #fafbfc;
+  --color-table-header-text: #2c3e50;
+  --color-table-row-hover: #f8f9fa;
+  --color-table-row-active: #f0f2f5;
+  --color-table-border: #e0e3eb;
+
+  // Shadow
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  // Spacing (optional, for consistency)
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  // Typography
+  --font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+
+  // Border radius
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  // Transitions
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+// Dark Theme (Light mode kept as default, dark can be enabled)
+[data-theme='light'] {
+  // Explicitly light theme (same as root)
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-elevated: #ffffff;
+  --color-bg-hover: #f5f7f9;
+  --color-bg-active: #e8ebed;
+
+  --color-text-primary: #2c3e50;
+  --color-text-secondary: #6c757d;
+  --color-text-tertiary: #909399;
+  --color-text-inverse: #ffffff;
+
+  --color-primary: #3c5ecd;
+  --color-primary-hover: #2d4ab3;
+  --color-primary-active: #1e3699;
+  --color-accent: #00c9ff;
+  --color-accent-hover: #00b3e6;
+
+  --color-success: #068340;
+  --color-success-bg: #e8f5e9;
+  --color-success-hover: #04632f;
+  --color-danger: #e8082b;
+  --color-danger-bg: #ffebee;
+  --color-danger-hover: #c20722;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fff3cd;
+  --color-info: #0ea5e9;
+  --color-info-bg: #e0f2fe;
+
+  --color-border-primary: #e0e3eb;
+  --color-border-secondary: #e8e8e8;
+  --color-border-tertiary: #f0f0f0;
+
+  --color-table-header-bg: #fafbfc;
+  --color-table-header-text: #2c3e50;
+  --color-table-row-hover: #f8f9fa;
+  --color-table-row-active: #f0f2f5;
+  --color-table-border: #e0e3eb;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+}

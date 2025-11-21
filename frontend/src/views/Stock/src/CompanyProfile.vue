@@ -68,6 +68,8 @@ export default {
   text-align: left;
   line-height: 1.4;
   font-size: 14px;
+  background: white;
+  box-shadow: 0 0 10px 10px #ededed;
 
   &::-webkit-scrollbar             { width: 5px; height: 5px; }
   &::-webkit-scrollbar-track       { background: transparent; }
