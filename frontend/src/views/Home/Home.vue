@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import { FeatureCard } from '../../components/molecules';
+import { FeatureCard } from '../../components/molecules'
 
 export default {
   name: 'Home',
   components: {
     FeatureCard,
   },
-};
+}
 </script>
 
 <style lang="scss">

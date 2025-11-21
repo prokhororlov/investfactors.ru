@@ -182,12 +182,12 @@
 </template>
 
 <script>
-import PriceRange from '../atoms/PriceRange/PriceRange.vue';
-import { Icon } from '../atoms';
+import PriceRange from '../atoms/PriceRange/PriceRange.vue'
+import { Icon } from '../atoms'
 
-const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP'].reduce((t, i) => ({ ...t, [i]: i }), {});
+const SORT_TYPES = ['NAME', 'PRICE', 'CHANGE', 'CAP'].reduce((t, i) => ({ ...t, [i]: i }), {})
 
-const SORT_STAGES = ['UP', 'DOWN'].reduce((t, i) => ({ ...t, [i]: i }), {});
+const SORT_STAGES = ['UP', 'DOWN'].reduce((t, i) => ({ ...t, [i]: i }), {})
 
 export default {
   name: 'StockList',
@@ -209,7 +209,7 @@ export default {
       page: +this.$route.query.page || 1,
       sortType: this.$route.query.sort_type || SORT_TYPES.CAP,
       sortStage: this.$route.query.sort_stage || SORT_STAGES.UP,
-    };
+    }
   },
   methods: {
     addToQuery(data) {
@@ -219,49 +219,49 @@ export default {
           ...this.$route.query,
           ...data,
         },
-      });
+      })
     },
     setSortType(type) {
       switch (this.sortStage) {
         case SORT_STAGES.UP:
-          this.sortStage = SORT_STAGES.DOWN;
-          this.sortType = type;
-          break;
+          this.sortStage = SORT_STAGES.DOWN
+          this.sortType = type
+          break
         case SORT_STAGES.DOWN:
-          this.sortStage = SORT_STAGES.UP;
-          this.sortType = type;
-          break;
+          this.sortStage = SORT_STAGES.UP
+          this.sortType = type
+          break
         default:
-          this.sortType = SORT_TYPES.CAP;
-          this.sortStage = SORT_STAGES.UP;
+          this.sortType = SORT_TYPES.CAP
+          this.sortStage = SORT_STAGES.UP
       }
 
       this.addToQuery({
         page: 1,
         sort_type: this.sortType,
         sort_stage: this.sortStage,
-      });
+      })
     },
     formatCap(value, currency) {
-      let cap = { value, measure: '' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' };
-      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' };
+      let cap = { value, measure: '' }
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'K' }
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'M' }
+      if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'B' }
       // if (cap.value / 1000 >= 1) cap = { value: cap.value / 1000, measure: 'T' };
 
       return value
         ? `${new Intl.NumberFormat({ USD: 'en-US', RUB: 'ru-RU' }[currency], {
-          style: 'currency',
-          currency,
-        }).format(cap.value)} ${cap.measure}`
-        : '-';
+            style: 'currency',
+            currency,
+          }).format(cap.value)} ${cap.measure}`
+        : '-'
     },
     handleCurrentPageChange(page) {
-      this.addToQuery({ page });
+      this.addToQuery({ page })
       window.scrollTo({
         top: 61 + 16,
         behavior: 'smooth',
-      });
+      })
     },
     getSortActiveClassConstructor(sortType) {
       return {
@@ -270,27 +270,27 @@ export default {
           sortType === this.sortType && this.sortStage === SORT_STAGES.UP,
         'stocks-list__item-filter_down':
           sortType === this.sortType && this.sortStage === SORT_STAGES.DOWN,
-      };
+      }
     },
     addSearchQuery() {
-      this.addToQuery({ search: this.search || undefined });
+      this.addToQuery({ search: this.search || undefined })
     },
     updateWidth() {
-      this.width = window.innerWidth;
+      this.width = window.innerWidth
     },
     normalTicker(ticker) {
-      return ticker.length === 5 && ticker[4] === 'P' ? ticker.slice(0, 4) : ticker;
+      return ticker.length === 5 && ticker[4] === 'P' ? ticker.slice(0, 4) : ticker
     },
   },
   created() {
-    window.addEventListener('resize', this.updateWidth);
+    window.addEventListener('resize', this.updateWidth)
   },
   computed: {
     market() {
-      return this.$route.query.market || 'MOEX';
+      return this.$route.query.market || 'MOEX'
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

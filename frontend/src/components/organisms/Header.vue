@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import logo from '../../assets/img/logo.svg';
-import { Icon } from '../atoms';
+import logo from '../../assets/img/logo.svg'
+import { Icon } from '../atoms'
 
 export default {
   components: {
@@ -63,23 +63,23 @@ export default {
   }),
   methods: {
     async login() {
-      await this.$auth.loginWithPopup();
-      const token = await this.$auth.getTokenSilently();
+      await this.$auth.loginWithPopup()
+      const token = await this.$auth.getTokenSilently()
 
-      this.$store.commit('setToken', token);
+      this.$store.commit('setToken', token)
     },
     async logout() {
       this.$auth.logout({
         returnTo: window.location.origin,
-      });
+      })
 
-      await this.$auth.handleRedirectCallback();
-      this.$store.commit('setToken', '');
+      await this.$auth.handleRedirectCallback()
+      this.$store.commit('setToken', '')
     },
     onClickMenuItem(e) {
       if (e?.target?.tagName === 'LI') {
-        const link = e.target.querySelector('a');
-        if (link) link.click();
+        const link = e.target.querySelector('a')
+        if (link) link.click()
       }
     },
   },
@@ -88,10 +88,10 @@ export default {
       return {
         Home: '0',
         Stocks: '1',
-      }[this.$route.name];
+      }[this.$route.name]
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
