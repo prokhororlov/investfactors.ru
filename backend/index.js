@@ -25,7 +25,7 @@ app.post('/api/stocks/', db.stocks.getList);
 app.post('/api/details/', db.stocks.getDetails);
 app.post('/user/', db.users.getUser);
 
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
   logger.info(`Server started at: http://localhost${PORT ? `:${PORT}` : ''}`);
 });
 
