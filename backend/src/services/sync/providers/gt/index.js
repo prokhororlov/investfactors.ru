@@ -7,6 +7,10 @@ const cache = {
   NYSE: [],
 };
 
+const numberOrFallback = (value, fallback) => (
+  Number.isFinite(value) ? value : fallback
+);
+
 const getFullStocks = (market) => (
   gtAPI.getStocks(market)
     .then((response) => (
@@ -31,24 +35,35 @@ const getStocksCheap = (market) => (
   gtAPI.getRows(market, 2, 4)
     .then((rows) => (
       cache[market]
-        .map((item, i) => ({
-          ...item,
-          price: rows[i][2] || cache.market[i].price,
-          change: rows[i][3] || cache.market[i].change,
-        }))
+        .map((item, i) => {
+          const [marketcap, price, change] = rows[i] || [];
+
+          return {
+            ...item,
+            cap: numberOrFallback(marketcap, item.cap),
+            price: numberOrFallback(price, item.price),
+            change: numberOrFallback(change, item.change),
+          };
+        })
     ))
     .catch(() => Promise.resolve(cache[market]))
 );
 
+const updateMarket = (market) => {
+  const request = cache[market].length
+    ? getStocksCheap(market)
+    : getFullStocks(market);
+
+  return request.then((stocks) => {
+    cache[market] = stocks;
+    return stocks;
+  });
+};
+
 const getStocks = () => {
   const keys = Object.keys(cache);
   return Promise.all(
-    keys.map((key) => {
-      cache[key] = cache[key].length
-        ? getStocksCheap(key)
-        : getFullStocks(key);
-      return cache[key];
-    }),
+    keys.map(updateMarket),
   ).then((result) => (
     result.reduce((acc, list, i) => ({
       ...acc,
@@ -59,7 +74,7 @@ const getStocks = () => {
 
 const clearCache = () => {
   Object.keys(cache).forEach((key) => {
-    cache[key] = {};
+    cache[key] = [];
   });
 };
 

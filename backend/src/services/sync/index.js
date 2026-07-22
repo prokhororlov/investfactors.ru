@@ -11,6 +11,8 @@ const logger = require('../../../utils/logger');
 
 const { isValidTime } = require('./utils');
 
+const UPDATE_INTERVAL_MS = 1000 * 60;
+
 let isPending = false;
 let initialised = false;
 
@@ -45,7 +47,7 @@ function update() {
 
 function start() {
   update();
-  setInterval(update, 1000 * 10); // once in 10 sec
+  setInterval(update, UPDATE_INTERVAL_MS);
 }
 
 function init() {
