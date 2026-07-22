@@ -49,14 +49,11 @@ async function getStocks(title) {
 async function getRows(title, from, to) {
   const sheet = doc.sheetsByTitle[title];
   const grid = sheet.gridProperties;
-  await sheet.loadCells(`${alpha[from]}2:${alpha[to]}${grid.rowCount}`);
+  const range = `${alpha[from]}2:${alpha[to]}${grid.rowCount}`;
 
-  const items = Array.from(Array(grid.rowCount).keys()).slice(1);
-  const rows = Array.from(Array(to - from + 1).keys()).map((i) => i + from);
-
-  return items.map((_, i) => rows.map((row) => (
-    sheet.getCell(i + 1, row).value
-  )));
+  return sheet.getCellsInRange(range, {
+    valueRenderOption: 'UNFORMATTED_VALUE',
+  }).then((rows) => rows || []);
 }
 
 module.exports = {
